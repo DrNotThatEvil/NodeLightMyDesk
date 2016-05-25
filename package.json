@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "bull": "^1.0.0-rc1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "pi-spi": "^1.0.1"
   }
 }
