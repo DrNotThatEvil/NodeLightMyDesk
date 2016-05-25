@@ -39,6 +39,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "bull": "^1.0.0-rc1",
     "express": "^4.13.4"
   }
 }
