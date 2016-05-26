@@ -39,8 +39,12 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "body-parser": "^1.15.1",
     "bull": "^1.0.0-rc1",
     "express": "^4.13.4",
-    "pi-spi": "^1.0.1"
+    "express-ws": "^2.0.0-rc.1",
+    "pi-spi": "^1.0.1",
+    "radium": "^0.17.1",
+    "react-websocket": "^1.0.0"
   }
 }

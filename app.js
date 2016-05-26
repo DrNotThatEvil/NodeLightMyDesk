@@ -1,14 +1,17 @@
-const express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
+const expressWs = require('express-ws')(app);
 const router = express.Router();
 const path = require('path');
-const RGBControl = require("./lib/RGBControl");
 
 global.appRoot = path.resolve(__dirname);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 router.use(express.static(__dirname + '/public'));
 
-require("./app/controllers/Install")(app);
+require('./app/controllers/Install')(app);
 
 app.use('/', router);
 
