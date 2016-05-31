@@ -68,14 +68,7 @@ module.exports = (app) => {
 
         RGBControl.newJob('fadein', 'low', {color: [255, 255,255], delay: 05});
         RGBControl.newJob('fadeout', 'low', {color: [255, 255,255], delay: 05});
-        RGBControl.newJob('fadein', 'low', {color: [255, 0,0], delay: 05});
-        RGBControl.newJob('fadeout', 'low', {color: [255, 0,0], delay: 05});
-        RGBControl.newJob('fadein', 'low', {color: [0, 255,0], delay: 05});
-        RGBControl.newJob('fadeout', 'low', {color: [0, 255,0], delay: 05});
-        RGBControl.newJob('fadein', 'low', {color: [0, 0,255], delay: 05});
-        RGBControl.newJob('fadeout', 'low', {color: [0, 0,255], delay: 05});
-        RGBControl.newJob('fadein', 'low', {color: [255, 0,255], delay: 05});
-        RGBControl.newJob('fadeout', 'low', {color: [255,0,255], delay: 05});
+        
         res.json({ data: [{ set: true }], errors: []});
     });
 

@@ -64,7 +64,7 @@ class Routes extends React.Component
                 <div style={[{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(to bottom, rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.25) 0%, rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.5) 50%,rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.25) 100%)'
+                    background: 'rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.5)',
                 }]}>
                     <Router history={hashHistory}>
                         <Route path="/install" component={Install} />

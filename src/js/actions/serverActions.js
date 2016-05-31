@@ -13,6 +13,39 @@ const serverActions = {
             value: value
         };
     },
+    setSpiDevType: function setChipType(value)
+    {
+        return {
+            type: 'SET_SPIDEVTYPE',
+            value: value
+        };
+    },
+    setSpiDevAsync: function setSpiDevAsync(value)
+    {
+        return function (dispatch) {
+            return fetch('/install/setdevicename',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    devicename: value
+                })
+            })
+            .then(response => response.json())
+            .then(json => {
+                if(json.errors.length == 0)
+                {
+                    dispatch(serverActions.setSpiDevType(json.data[0].value));
+                }
+                else
+                {
+                    dispatch(serverActions.putErrors(json.errors));
+                }
+            });
+        };
+    },
     setChipType: function setChipType(value)
     {
         return {
@@ -30,7 +63,7 @@ const serverActions = {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    
+                    chiptype: value
                 })
             })
             .then(response => response.json())
@@ -47,6 +80,14 @@ const serverActions = {
         };
     },
     fetchInstalled: function fetchInstalled()
+    {
+        return function (dispatch) {
+            return fetch('/install/checkinstall')
+            .then(response => response.json())
+            .then(json => dispatch(serverActions.setInstalled(json.installed)));
+        };
+    },
+    startPulse: function startPulse()
     {
         return function (dispatch) {
             return fetch('/install/checkinstall')
