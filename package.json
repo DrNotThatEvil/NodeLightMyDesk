@@ -41,10 +41,18 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "bull": "^1.0.0-rc1",
+    "color": "^0.11.1",
+    "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "express-ws": "^2.0.0-rc.1",
     "pi-spi": "^1.0.1",
     "radium": "^0.17.1",
-    "react-websocket": "^1.0.0"
+    "radium-grid": "^2.0.1",
+    "react-redux": "^4.4.5",
+    "react-websocket": "^1.0.0",
+    "redux": "^3.5.2",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.1.0",
+    "style-loader": "^0.13.1"
   }
 }

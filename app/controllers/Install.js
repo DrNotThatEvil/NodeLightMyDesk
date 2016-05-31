@@ -25,7 +25,7 @@ module.exports = (app) => {
         }
 
         RGBControl.setChipType(req.body.chiptype);
-        res.json({ data: [{ set: true }], errors: []});
+        res.json({ data: [{ set: true, value: req.body.chiptype }], errors: []});
     });
 
     router.post('/setdevicename', (req, res) => {
@@ -39,7 +39,7 @@ module.exports = (app) => {
         }
 
         RGBControl.setDeviceName(req.body.devicename);
-        res.json({ data: [{ set: true }], errors: []});
+        res.json({ data: [{ set: true, value: req.body.devicename }], errors: []});
     });
 
     router.post('/setnumleds', (req, res) => {
