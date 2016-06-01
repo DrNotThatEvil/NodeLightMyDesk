@@ -1,13 +1,15 @@
 import React from 'react';
-import { Router, Route, hashHistory } from 'react-router';
+import { Router, Route, hashHistory, withRouter } from 'react-router';
 import Radium from 'radium';
 import Websocket from 'react-websocket';
+import serverActions from '../actions/serverActions';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Install from './Views/Install';
-import Test from './Views/Test';
+import Dashboard from './Views/Dashboard';
 
-class Routes extends React.Component
+class RoutesBgBase extends React.Component
 {
     static propTypes = {
         server: React.PropTypes.object.isRequired
@@ -17,26 +19,34 @@ class Routes extends React.Component
     {
         super(props);
         this.state = {
-            color: [0,0,0]
+            color: [0,0,0],
+            duration: 500
         };
     }
 
     handleData(data)
     {
         // do something with the data
-        this.setState({
-            color: data
-        });
-    }
-
-    requireInstall(nextState, replace)
-    {
-        const state = this.props.server;
-        if(!state.installed)
+        if(data.type == 'fadeout')
         {
-            replace({
-                pathname: '/install',
-                state: { nextPathname: nextState.location.pathname }
+            this.setState({
+                color: [0,0,0],
+                duration: data.totalTime
+            });
+        }
+
+        if(data.type == 'fadein')
+        {
+            this.setState({
+                color: data.targetColor,
+                duration: data.totalTime
+            });
+        }
+
+        if(data.constructor === Array)
+        {
+            this.setState({
+                color: data
             });
         }
     }
@@ -64,23 +74,102 @@ class Routes extends React.Component
                 <div style={[{
                     width: '100%',
                     height: '100%',
-                    background: 'rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.5)',
+                    backgroundColor: 'rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.25)',
+                    willChange: 'background-color',
+                    transitionDuration: this.state.duration + 'ms',
+                    transitionProperty: 'background-color'
                 }]}>
-                    <Router history={hashHistory}>
-                        <Route path="/install" component={Install} />
-                        <Route path="/test" component={Test} onEnter={this.requireInstall.bind(this)} />
-                    </Router>
+                    { this.props.children }
                 </div>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = (store) => {
-    return store;
+const RoutesBg = Radium(RoutesBgBase);
+
+class Routes extends React.Component
+{
+    static propTypes = {
+        server: React.PropTypes.func.isRequired
+    };
+
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            color: [0,0,0]
+        };
+    }
+
+    handleData(data)
+    {
+        // do something with the data
+        this.setState({
+            color: data
+        });
+    }
+
+    componentWillReceiveProps(nextProps)
+    {
+        if(nextProps.server.installed)
+        {
+            console.log(this.props);
+        }
+    }
+
+    requireInstall(nextState, replace)
+    {
+        const state = this.props.server;
+        if(!state.installed)
+        {
+            replace({
+                pathname: '/install',
+                state: { nextPathname: nextState.location.pathname }
+            });
+        }
+    }
+
+    requireNoInstall(nextState, replace)
+    {
+        const state = this.props.server;
+        if(state.installed)
+        {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            });
+        }
+    }
+
+    render()
+    {
+        return (
+            <RoutesBg>
+                <Router history={hashHistory}>
+                    <Route path="/install" component={Install} />
+                    <Route path="/" component={Dashboard} onEnter={this.requireInstall.bind(this)}>
+
+                    </Route>
+                </Router>
+            </RoutesBg>
+        );
+    }
+}
+
+const mapStateToProps = (state) => {
+    return { server: state.server };
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        fetchInstalled: serverActions.fetchInstalled
+    }, dispatch);
+};
+
 const VisibleRoutes = connect(
+    mapStateToProps,
     mapDispatchToProps
-)(Radium(Routes));
+)(withRouter(Radium(Routes)));
 
 export default VisibleRoutes;

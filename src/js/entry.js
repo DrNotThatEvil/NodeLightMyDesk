@@ -10,11 +10,11 @@ import Routes from './components/Routes';
 require('../css/font-awesome.min.css');
 require('../css/main.css');
 
-import serverActions from './actions/serverActions';
+//import serverActions from './actions/serverActions';
 
 let store = configureStore();
 
-store.dispatch(serverActions.fetchInstalled());
+//store.dispatch(serverActions.fetchInstalled());
 
 ReactDom.render(
     (

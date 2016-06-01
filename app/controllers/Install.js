@@ -28,6 +28,34 @@ module.exports = (app) => {
         res.json({ data: [{ set: true, value: req.body.chiptype }], errors: []});
     });
 
+    router.post('/setcolormap', (req, res) => {
+        if(!('colormap' in req.body))
+        {
+            res.json({ data: [], errors: [{
+                error: 'MissingParameter',
+                errorStr: 'Missing devicename paramater'
+            }]});
+            return;
+        }
+
+        RGBControl.setColorMap(req.body.colormap);
+        res.json({ data: [{ set: true, value: req.body.colormap }], errors: []});
+    });
+
+    router.get('/save', (req, res) => {
+        if(!RGBControl.checkDeviceReady())
+        {
+            res.json({ data: [], errors: [{
+                error: 'RGBControlNotReady',
+                errorStr: 'RGBControl is not yet ready!'
+            }]});
+            return;
+        }
+
+        let status = RGBControl.saveConfig();
+        res.json({ data: [{ status: status }], errors: []});
+    });
+
     router.post('/setdevicename', (req, res) => {
         if(!('devicename' in req.body))
         {
@@ -53,7 +81,7 @@ module.exports = (app) => {
         }
 
         RGBControl.setNumLeds(req.body.numleds);
-        res.json({ data: [{ set: true }], errors: []});
+        res.json({ data: [{ set: true, value: req.body.numleds}], errors: []});
     });
 
     router.get('/pulsewhite', (req, res) => {
@@ -66,9 +94,34 @@ module.exports = (app) => {
             return;
         }
 
-        RGBControl.newJob('fadein', 'low', {color: [255, 255,255], delay: 05});
-        RGBControl.newJob('fadeout', 'low', {color: [255, 255,255], delay: 05});
-        
+        RGBControl.newJob('fadein', 'low', {color: [255, 255,255], delay: 5});
+        RGBControl.newJob('fadeout', 'low', {color: [255, 255,255], delay: 5});
+
+        res.json({ data: [{ set: true }], errors: []});
+    });
+
+    router.post('/pulse', (req, res) => {
+        if(!RGBControl.checkDeviceReady())
+        {
+            res.json({ data: [], errors: [{
+                error: 'RGBControlNotReady',
+                errorStr: 'RGBControl is not yet ready!'
+            }]});
+            return;
+        }
+
+        if(!('color' in req.body))
+        {
+            res.json({ data: [], errors: [{
+                error: 'MissingParameter',
+                errorStr: 'Missing color paramater'
+            }]});
+            return;
+        }
+
+        RGBControl.newJob('fadein', 'low', {color: req.body.color, delay: 5});
+        RGBControl.newJob('fadeout', 'low', {color: req.body.color, delay: 5});
+
         res.json({ data: [{ set: true }], errors: []});
     });
 

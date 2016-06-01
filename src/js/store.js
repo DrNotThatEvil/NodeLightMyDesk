@@ -7,7 +7,7 @@ let finalCreateStore = compose(
     applyMiddleware(thunk, logger())
 )(createStore);
 
-export default function configureStore(initialState = { server: { installed: false, ledlength: 1, errors: [] } })
+export default function configureStore(initialState = { server: { installed: false, ledlength: 1, ledlengthlock: false, errors: [] } })
 {
     return finalCreateStore(reducer, initialState);
 }

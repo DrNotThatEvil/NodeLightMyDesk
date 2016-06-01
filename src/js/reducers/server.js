@@ -4,9 +4,21 @@ export default function server(state = [], action) {
         return Object.assign({}, state, {
             installed: action.value
         });
+    case 'SET_SAVED':
+        return Object.assign({}, state, {
+            saved: action.value
+        });
+    case 'SET_LEDLENGTHLOCK':
+        return Object.assign({}, state, {
+            ledlengthlock: action.value
+        });
     case 'SET_CHIPTYPE':
         return Object.assign({}, state, {
             chiptype: action.value
+        });
+    case 'SET_LEDLENGTH':
+        return Object.assign({}, state, {
+            ledlength: action.value
         });
     case 'SET_SPIDEVTYPE':
         return Object.assign({}, state, {
