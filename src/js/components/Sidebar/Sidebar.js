@@ -4,6 +4,7 @@ import Color from 'color';
 
 import SidebarStyle from './SidebarStyle';
 import SidebarItem from './SidebarItem';
+import ColorStateItem from './ColorStateItem';
 
 const Menu = require('react-burger-menu').slide;
 
@@ -22,9 +23,10 @@ class Sidebar extends React.Component {
         return (
             <div key="sidebar" style={[styles.container]}>
                 <Menu styles={ menuStyles } width={ 265 } onStateChange={ this.isMenuOpen.bind(this) } noOverlay>
-                    <SidebarItem title="Projects">
-                        <SidebarItem title="Join project" icon="fa fa-user-plus" />
-                        <SidebarItem title="Create project" icon="fa fa-pencil-square-o" handleClick={this.openCreateProjectModal.bind(this)} />
+                    <ColorStateItem />
+                    <SidebarItem title="Settings" icon="fa fa-cog" />
+                    <SidebarItem title="Plugins">
+                        <SidebarItem title="Twitch plugin" switch={true} />
                     </SidebarItem>
                 </Menu>
             </div>
@@ -64,7 +66,7 @@ var menuStyles = {
     },
     bmItemList: {
         color: '#b8b7ad',
-        padding: 0
+        paddingTop: 45
     },
     bmOverlay: {
         background: 'rgba(0, 0, 0, 0.3)'

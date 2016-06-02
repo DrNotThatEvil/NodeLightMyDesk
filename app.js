@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 router.use(express.static(__dirname + '/public'));
 
 require('./app/controllers/Install')(app);
+require('./app/controllers/Dashboard')(app);
 
 app.use('/', router);
 

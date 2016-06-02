@@ -50,9 +50,12 @@
     "radium-grid": "^2.0.1",
     "react-burger-menu": "^1.9.0",
     "react-redux": "^4.4.5",
+    "react-slider": "^0.6.1",
     "react-websocket": "^1.0.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
+    "redux-promise": "^0.5.3",
+    "redux-react-router-transitions": "^0.3.0",
     "redux-thunk": "^2.1.0",
     "style-loader": "^0.13.1"
   }

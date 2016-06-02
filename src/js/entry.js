@@ -12,7 +12,7 @@ require('../css/main.css');
 
 //import serverActions from './actions/serverActions';
 
-let store = configureStore();
+const store = configureStore();
 
 //store.dispatch(serverActions.fetchInstalled());
 

@@ -10,7 +10,6 @@ const style = {
     {
         display: 'block',
         width: 300,
-        margin: '20px auto',
         padding: 15,
         backgroundColor: 'rgba(0,0,0,0.2)',
         color: '#FFF',

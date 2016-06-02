@@ -86,12 +86,20 @@ class RoutesBgBase extends React.Component
     }
 }
 
-const RoutesBg = Radium(RoutesBgBase);
+//const RoutesBg = Radium(RoutesBgBase);
+
+const mapStateToPropsBg = (store) => {
+    return { server: store.server };
+};
+
+const RoutesBg = connect(
+    mapStateToPropsBg
+)(Radium(RoutesBgBase));
 
 class Routes extends React.Component
 {
     static propTypes = {
-        server: React.PropTypes.func.isRequired
+        server: React.PropTypes.object.isRequired
     };
 
     constructor(props)
@@ -100,6 +108,13 @@ class Routes extends React.Component
         this.state = {
             color: [0,0,0]
         };
+
+        this.props.fetchInstalled((value) => {
+            if(value)
+            {
+                hashHistory.replace('/');
+            }
+        });
     }
 
     handleData(data)
@@ -110,35 +125,12 @@ class Routes extends React.Component
         });
     }
 
-    componentWillReceiveProps(nextProps)
-    {
-        if(nextProps.server.installed)
-        {
-            console.log(this.props);
-        }
-    }
-
     requireInstall(nextState, replace)
     {
         const state = this.props.server;
         if(!state.installed)
         {
-            replace({
-                pathname: '/install',
-                state: { nextPathname: nextState.location.pathname }
-            });
-        }
-    }
-
-    requireNoInstall(nextState, replace)
-    {
-        const state = this.props.server;
-        if(state.installed)
-        {
-            replace({
-                pathname: '/',
-                state: { nextPathname: nextState.location.pathname }
-            });
+            replace('/install');
         }
     }
 
@@ -157,8 +149,8 @@ class Routes extends React.Component
     }
 }
 
-const mapStateToProps = (state) => {
-    return { server: state.server };
+const mapStateToProps = (store) => {
+    return { server: store.server };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -153,12 +153,16 @@ const serverActions = {
             });
         };
     },
-    fetchInstalled: function fetchInstalled()
+    fetchInstalled: function fetchInstalled(cb)
     {
         return function (dispatch) {
             return fetch('/install/checkinstall')
             .then(response => response.json())
-            .then(json => dispatch(serverActions.setInstalled(json.installed)));
+            .then(json => {
+                dispatch(serverActions.setInstalled(json.installed));
+                if(cb)
+                    cb(json.installed);
+            });
         };
     },
     startPulse: function startPulse(color)

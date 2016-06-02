@@ -13,14 +13,20 @@ class SidebarItem extends React.Component {
         icon: React.PropTypes.string,
         iconimage: React.PropTypes.string,
         title: React.PropTypes.string.isRequired,
-        router: React.PropTypes.object
+        router: React.PropTypes.object,
+        switch: React.PropTypes.bool,
+        switchState: React.PropTypes.bool
     };
 
     constructor(props)
     {
         super(props);
 
-        this.state = { collapsed: true, hideTimeout: false };
+        this.state = {
+            collapsed: true,
+            hideTimeout: false,
+            switchState: (this.props.switchState ? this.props.switchState : false)
+        };
     }
 
     getChildContext()
@@ -71,6 +77,16 @@ class SidebarItem extends React.Component {
         }
     }
 
+    toggleClick(e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+
+        this.setState({
+            switchState: !this.state.switchState
+        });
+    }
+
     render()
     {
         let titleState = (Radium.getState(this.state, 'sidebaritem', ':hover') ? {
@@ -92,6 +108,8 @@ class SidebarItem extends React.Component {
         let icon = ( React.Children.count(this.props.children) > 0 ? 'fa fa-chevron-' + (this.state.collapsed ? 'down' : 'up') : this.props.icon );
         let iconElement = ( icon ? <i className={icon} style={[styles.icon]} aria-hidden="true"></i> : '' );
         iconElement = ( this.props.iconimage ? <img style={[styles.iconimage]} src={this.props.iconimage} />: iconElement );
+
+        iconElement = ( this.props.switch ? <i className={'fa fa-toggle-'+(this.state.switchState ? 'on' : 'off')} style={[styles.icon]} aria-hidden="true" onClick={this.toggleClick.bind(this)}></i> : iconElement);
 
         return (
             <div key="sidebaritem" style={[SidebarStyle.bmListItem.base, expanded]} onClick={this.handleClick.bind(this)}>
