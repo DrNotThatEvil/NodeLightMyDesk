@@ -30,6 +30,7 @@ const style = {
         fontSize: 20,
         width: 330,
         cursor: 'pointer',
+        marginTop: 15,
         ':active': {
             backgroundColor: '#27ae60'
         },

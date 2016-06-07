@@ -94,8 +94,8 @@ module.exports = (app) => {
             return;
         }
 
-        RGBControl.newJob('fadein', 'low', {color: [255, 255,255], delay: 5});
-        RGBControl.newJob('fadeout', 'low', {color: [255, 255,255], delay: 5});
+        RGBControl.newJob('fadein', {color: [255, 255,255], delay: 5});
+        RGBControl.newJob('fadeout', {color: [255, 255,255], delay: 5});
 
         res.json({ data: [{ set: true }], errors: []});
     });
@@ -119,16 +119,10 @@ module.exports = (app) => {
             return;
         }
 
-        RGBControl.newJob('fadein', 'low', {color: req.body.color, delay: 5});
-        RGBControl.newJob('fadeout', 'low', {color: req.body.color, delay: 5});
+        RGBControl.newJob('fadein', {color: req.body.color, delay: 5});
+        RGBControl.newJob('fadeout', {color: req.body.color, delay: 5});
 
         res.json({ data: [{ set: true }], errors: []});
-    });
-
-    router.ws('/color', function(ws, req) {
-        ws.on('message', function(msg) {
-            ws.send(msg);
-        });
     });
 
     app.use('/install', router);

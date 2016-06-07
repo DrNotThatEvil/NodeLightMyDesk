@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const expressWs = require('express-ws')(app);
 const router = express.Router();
 const path = require('path');
 
@@ -10,6 +9,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.use(express.static(__dirname + '/public'));
+
+const pluginSystem = require('./lib/LedPluginSystem');
+pluginSystem.initPlugins(app);
 
 require('./app/controllers/Install')(app);
 require('./app/controllers/Dashboard')(app);
