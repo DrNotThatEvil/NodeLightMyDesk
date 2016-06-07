@@ -26,7 +26,7 @@ class Sidebar extends React.Component {
                     <ColorStateItem />
                     <SidebarItem title="Settings" icon="fa fa-cog" />
                     <SidebarItem title="Plugins">
-                        <SidebarItem title="Twitch plugin" switch={true} />
+                        <SidebarItem title="Twitch plugin" switch={true} handleClick={this.props.pluginClicked}/>
                     </SidebarItem>
                 </Menu>
             </div>
@@ -76,7 +76,6 @@ var menuStyles = {
 var styles = {
     container:
     {
-        width: '100%',
-        height: '100%'
+
     }
 };

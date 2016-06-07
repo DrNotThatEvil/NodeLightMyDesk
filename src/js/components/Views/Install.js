@@ -1,7 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
 import Color from 'color';
-import Websocket from 'react-websocket';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import serverActions from '../../actions/serverActions';
@@ -40,8 +39,8 @@ class Install extends React.Component {
     {
         return () => {
             this.props.setSpiDevAsync(dev);
-            this.props.pulseColorInterval([255, 255, 255]);
-            this.pulseColor();
+            this.props.startPulse([255, 255, 255]);
+            this.pulseInterval = setInterval(this.pulseTimer.bind(this), 1500);
         };
     }
 
@@ -72,7 +71,9 @@ class Install extends React.Component {
             {
                 this.props.setColorMapAsync(this.state.colorMap, () => {
                     this.props.saveConfig(() => {
-                        this.props.replace('/');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 5000);
                     });
                 });
             }
@@ -98,20 +99,21 @@ class Install extends React.Component {
         });
     }
 
-    pulseColorInterval()
+    pulseTimer(data)
     {
-        // do something with the data\
-        // let interval = setInterval(() => {
-            let shouldpulse = ('spidevtype' in this.props.server ? (this.props.server.ledlengthlock ?  false : true) : false);
-            if(shouldpulse || !this.state.colorMapped)
-            {
-                //this.props.startPulse(this.state.pulseColor);
-            }
-            else
-            {
-                clearInterval(interval);
-            }
-        // }, 3000);
+        // do something with the data
+        let shouldpulse = ('spidevtype' in this.props.server ? (this.props.server.ledlengthlock ?  false : true) : false);
+
+        //console.log('PULSE: ', (data.type == 'fadeout' && (shouldpulse || !this.state.colorMapped)));
+
+        if((shouldpulse || !this.state.colorMapped))
+        {
+            this.props.startPulse(this.state.pulseColor);
+        }
+        else if(!(shouldpulse || !this.state.colorMapped))
+        {
+            clearInterval(this.pulseInterval);
+        }
     }
 
     render()
@@ -145,13 +147,11 @@ class Install extends React.Component {
         {
             new_uri = 'ws:';
         }
-        new_uri += '//' + loc.host;
-        new_uri += loc.pathname + 'install/color';
+        new_uri += '//' + loc.hostname + ':8880';
 
         return (
             <div style={[styles.base]}>
                 <div style={[styles.container]}>
-
                     <div style={[styles.header]}>
                         <span>Ledstrip installation: Configure chiptype</span>
                     </div>

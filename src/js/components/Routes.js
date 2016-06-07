@@ -26,20 +26,21 @@ class RoutesBgBase extends React.Component
 
     handleData(data)
     {
+        //console.log(data);
         // do something with the data
         if(data.type == 'fadeout')
         {
             this.setState({
                 color: [0,0,0],
-                duration: data.totalTime
+                duration: (data.data.delay*100)
             });
         }
 
         if(data.type == 'fadein')
         {
             this.setState({
-                color: data.targetColor,
-                duration: data.totalTime
+                color: data.data.color,
+                duration: (data.data.delay*100)
             });
         }
 
@@ -62,8 +63,8 @@ class RoutesBgBase extends React.Component
         {
             new_uri = 'ws:';
         }
-        new_uri += '//' + loc.host;
-        new_uri += loc.pathname + 'install/color';
+        new_uri += '//' + loc.hostname + ':8880';
+
 
         return (
             <div style={[{
@@ -74,7 +75,7 @@ class RoutesBgBase extends React.Component
                 <div style={[{
                     width: '100%',
                     height: '100%',
-                    backgroundColor: 'rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+',0.25)',
+                    backgroundColor: 'rgba('+this.state.color[0]+','+this.state.color[1]+','+this.state.color[2]+', 0.25)',
                     willChange: 'background-color',
                     transitionDuration: this.state.duration + 'ms',
                     transitionProperty: 'background-color'

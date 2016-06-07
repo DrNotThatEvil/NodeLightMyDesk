@@ -31,6 +31,7 @@ const style = {
         width: 330,
         marginBottom: 15,
         cursor: 'pointer',
+        marginTop: 15,
         ':active': {
             backgroundColor: '#27ae60'
         },

@@ -57,6 +57,7 @@
     "redux-promise": "^0.5.3",
     "redux-react-router-transitions": "^0.3.0",
     "redux-thunk": "^2.1.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "ws": "^1.1.0"
   }
 }
