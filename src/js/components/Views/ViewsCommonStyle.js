@@ -29,6 +29,7 @@ const style = {
         padding: 10,
         fontSize: 20,
         width: 330,
+        marginBottom: 15,
         cursor: 'pointer',
         ':active': {
             backgroundColor: '#27ae60'

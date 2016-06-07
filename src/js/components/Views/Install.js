@@ -40,7 +40,8 @@ class Install extends React.Component {
     {
         return () => {
             this.props.setSpiDevAsync(dev);
-            this.props.startPulse([255, 255, 255]);
+            this.props.pulseColorInterval([255, 255, 255]);
+            this.pulseColor();
         };
     }
 
@@ -70,7 +71,6 @@ class Install extends React.Component {
             if(this.state.colorMapPos == 'b')
             {
                 this.props.setColorMapAsync(this.state.colorMap, () => {
-
                     this.props.saveConfig(() => {
                         this.props.replace('/');
                     });
@@ -98,35 +98,38 @@ class Install extends React.Component {
         });
     }
 
-    handleData(data)
+    pulseColorInterval()
     {
-        // do something with the data
-        console.log(this.state);
-        let shouldpulse = ('spidevtype' in this.props.server ? (this.props.server.ledlengthlock ?  false : true) : false);
-        if(data.jobType == 'fadeout' && (shouldpulse || !this.state.colorMapped))
-        {
-            setTimeout(() => {
-                this.props.startPulse(this.state.pulseColor);
-            }, 800);
-        }
+        // do something with the data\
+        // let interval = setInterval(() => {
+            let shouldpulse = ('spidevtype' in this.props.server ? (this.props.server.ledlengthlock ?  false : true) : false);
+            if(shouldpulse || !this.state.colorMapped)
+            {
+                //this.props.startPulse(this.state.pulseColor);
+            }
+            else
+            {
+                clearInterval(interval);
+            }
+        // }, 3000);
     }
 
     render()
     {
         let page1 = {
-            display: ('chiptype' in this.props.server ? 'none' : 'block')
+            display: ('chiptype' in this.props.server ? 'none' : 'flex')
         };
 
         let page2 = {
-            display: ('chiptype' in this.props.server ? ('spidevtype' in this.props.server ?  'none' : 'block') : 'none')
+            display: ('chiptype' in this.props.server ? ('spidevtype' in this.props.server ?  'none' : 'flex') : 'none')
         };
 
         let page3 = {
-            display: ('spidevtype' in this.props.server ? (this.props.server.ledlengthlock ?  'none' : 'block') : 'none')
+            display: ('spidevtype' in this.props.server ? (this.props.server.ledlengthlock ?  'none' : 'flex') : 'none')
         };
 
         let page4 = {
-            display: (this.props.server.ledlengthlock ?  (this.state.colorMapped ? 'none' : 'block') : 'none')
+            display: (this.props.server.ledlengthlock ?  (this.state.colorMapped ? 'none' : 'flex') : 'none')
         };
 
         let page5 = {
@@ -148,7 +151,7 @@ class Install extends React.Component {
         return (
             <div style={[styles.base]}>
                 <div style={[styles.container]}>
-                    <Websocket url={new_uri} onMessage={this.handleData.bind(this)}/>
+
                     <div style={[styles.header]}>
                         <span>Ledstrip installation: Configure chiptype</span>
                     </div>

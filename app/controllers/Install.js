@@ -119,8 +119,8 @@ module.exports = (app) => {
             return;
         }
 
-        RGBControl.newJob('fadein', 'low', {color: req.body.color, delay: 5});
-        RGBControl.newJob('fadeout', 'low', {color: req.body.color, delay: 5});
+        RGBControl.newJob('fadein', {color: req.body.color, animationDelay: 5});
+        RGBControl.newJob('fadeout', {color: req.body.color, animationDelay: 5}, {delay: 2000});
 
         res.json({ data: [{ set: true }], errors: []});
     });
