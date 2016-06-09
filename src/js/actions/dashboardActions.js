@@ -18,6 +18,27 @@ const dashboardActions = {
             });
         };
     },
+    syncSetStatus: function syncSetColor(status, cb)
+    {
+        return function (dispatch) {
+            return fetch('/dashboard/setstatus',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: status
+                })
+            })
+            .then(response => response.json())
+            .then(json => {
+                dispatch(dashboardActions.setStatus(json.data[0].value));
+                if(cb)
+                    cb(json.data[0].value);
+            });
+        };
+    },
     setColor: function setColor(color)
     {
         return {
@@ -32,6 +53,62 @@ const dashboardActions = {
             .then(response => response.json())
             .then(json => {
                 dispatch(dashboardActions.setColor(json.data[0].value));
+                if(cb)
+                    cb(json.data[0].value);
+            });
+        };
+    },
+    syncSetColor: function syncSetColor(color, cb)
+    {
+        return function (dispatch) {
+            return fetch('/dashboard/setcolor',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    color: color
+                })
+            })
+            .then(response => response.json())
+            .then(json => {
+                dispatch(dashboardActions.setColor(json.data[0].value));
+                if(cb)
+                    cb(json.data[0].value);
+            });
+        };
+    },
+    fetchSidebarPlugins: function fetchSidebarPlugins(cb)
+    {
+        return function (dispatch) {
+            return fetch('/plugin/sidebar')
+            .then(response => response.json())
+            .then(json => {
+                //dispatch(dashboardActions.setColor(json.data[0].value));
+                if(cb)
+                    cb(json.data);
+            });
+        };
+    },
+    setModuleStatus: function setModuleStatus(modid, value, cb)
+    {
+        return function (dispatch) {
+            return fetch('/plugin/setpluginstatus',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: modid,
+                    value: value
+                })
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json);
+
                 if(cb)
                     cb(json.data[0].value);
             });

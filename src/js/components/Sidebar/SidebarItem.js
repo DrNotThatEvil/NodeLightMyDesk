@@ -58,6 +58,7 @@ class SidebarItem extends React.Component {
             {
                 this.setState({hideTimeout: true});
             }
+
             this.setState({
                 collapsed: collapsed
             });
@@ -82,9 +83,17 @@ class SidebarItem extends React.Component {
         e.stopPropagation();
         e.preventDefault();
 
-        this.setState({
-            switchState: !this.state.switchState
-        });
+
+        if(Boolean(this.props.onToggle))
+        {
+            this.props.onToggle(!this.props.switchState);
+        }
+        else
+        {
+            this.setState({
+                switchState: !this.state.switchState
+            });
+        }
     }
 
     render()
@@ -109,7 +118,7 @@ class SidebarItem extends React.Component {
         let iconElement = ( icon ? <i className={icon} style={[styles.icon]} aria-hidden="true"></i> : '' );
         iconElement = ( this.props.iconimage ? <img style={[styles.iconimage]} src={this.props.iconimage} />: iconElement );
 
-        iconElement = ( this.props.switch ? <i className={'fa fa-toggle-'+(this.state.switchState ? 'on' : 'off')} style={[styles.icon]} aria-hidden="true" onClick={this.toggleClick.bind(this)}></i> : iconElement);
+        iconElement = ( this.props.switch ? <i className={'fa fa-toggle-'+( (Boolean(this.props.onToggle) ? this.props.switchState : this.state.switchState ) ? 'on' : 'off')} style={[styles.icon]} aria-hidden="true" onClick={this.toggleClick.bind(this)}></i> : iconElement);
 
         return (
             <div key="sidebaritem" style={[SidebarStyle.bmListItem.base, expanded]} onClick={this.handleClick.bind(this)}>

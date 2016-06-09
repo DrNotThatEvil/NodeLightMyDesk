@@ -165,6 +165,17 @@ const serverActions = {
             });
         };
     },
+    clearJobs: function clearJobs(cb)
+    {
+        return function () {
+            return fetch('/install/clearjobs')
+            .then(response => response.json())
+            .then(json => {
+                if(cb)
+                    cb(json.data[0].set);
+            });
+        };
+    },
     startPulse: function startPulse(color)
     {
         return function (dispatch) {

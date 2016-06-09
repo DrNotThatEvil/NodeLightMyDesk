@@ -51,12 +51,28 @@ class ColorStateItem extends React.Component {
         });
     }
 
+    onSliderDone()
+    {
+        // lets update that color shall we ?
+        this.props.syncSetColor(this.state.color, () => {
+            console.log('COLOR SET');
+        })
+    }
+
     setStatus(status)
     {
         return () => {
             this.setState({
                 status: status
+            }, () => {
+                this.props.syncSetStatus(this.state.status, () => {});
             });
+
+            if(!status)
+            {
+                if(this.props.onOffClick)
+                    this.props.onOffClick();
+            }
         };
     }
 
@@ -73,9 +89,9 @@ class ColorStateItem extends React.Component {
             <div ref="colorstateitem" style={[SidebarStyle.bmListItem.base, styles.personal]}>
                 <div ref="colorbox" style={[styles.colorbox, colorStyle]}></div>
                 <div style={[{ width: 165, marginLeft: 95 }]}>
-                    <ReactSlider ref="red" onChange={this.onSliderChange.bind(this)} min={0} max={255} value={this.state.color[0]} barClassName="bar-red" withBars />
-                    <ReactSlider ref="green" onChange={this.onSliderChange.bind(this)} min={0} max={255} value={this.state.color[1]} barClassName="bar-green" withBars />
-                    <ReactSlider ref="blue" onChange={this.onSliderChange.bind(this)} min={0} max={255} value={this.state.color[2]} barClassName="bar-blue" withBars />
+                    <ReactSlider ref="red" onChange={this.onSliderChange.bind(this)} onAfterChange={this.onSliderDone.bind(this)} min={0} max={255} value={this.state.color[0]} barClassName="bar-red" withBars />
+                    <ReactSlider ref="green" onChange={this.onSliderChange.bind(this)} onAfterChange={this.onSliderDone.bind(this)} min={0} max={255} value={this.state.color[1]} barClassName="bar-green" withBars />
+                    <ReactSlider ref="blue" onChange={this.onSliderChange.bind(this)} onAfterChange={this.onSliderDone.bind(this)} min={0} max={255} value={this.state.color[2]} barClassName="bar-blue" withBars />
                 </div>
                 <div>
                     <input key="on" type="button" onClick={this.setStatus.bind(this)(true)} style={[ViewsCommonStyle.base, ViewsCommonStyle.submit, styles.on, (this.state.status ? styles.disabled : {})]} value="ON" />
@@ -89,7 +105,9 @@ class ColorStateItem extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         fetchStatus: dashboardActions.fetchStatus,
-        fetchColor: dashboardActions.fetchColor
+        fetchColor: dashboardActions.fetchColor,
+        syncSetColor: dashboardActions.syncSetColor,
+        syncSetStatus: dashboardActions.syncSetStatus
     }, dispatch);
 };
 

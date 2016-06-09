@@ -2,9 +2,14 @@ import React from 'react';
 import Radium from 'radium';
 import Color from 'color';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import SidebarStyle from './SidebarStyle';
 import SidebarItem from './SidebarItem';
 import ColorStateItem from './ColorStateItem';
+
+import dashboardActions from '../../actions/dashboardActions';
 
 const Menu = require('react-burger-menu').slide;
 
@@ -12,21 +17,79 @@ class Sidebar extends React.Component {
     constructor(props)
     {
         super(props);
+        this.state = {
+            plugins: []
+        };
     }
 
-    isMenuOpen(state) {
+    componentDidMount()
+    {
+        this.props.fetchSidebarPlugins((data) => {
+            this.setState({
+                plugins: data
+            });
+        });
+    }
+
+    isMenuOpen(state)
+    {
         return state.isOpen;
+    }
+
+    onPluginToggle(id)
+    {
+        return (value) => {
+            this.props.setModuleStatus(id, value, (change) => {
+                this.setState({
+                    plugins: this.state.plugins.map((obj) => {
+                        if(obj.id == id)
+                            obj.status = change;
+                        return obj;
+                    })
+                });
+            });
+        };
+    }
+
+    fetchPlugins(e)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+
+        this.props.fetchSidebarPlugins((data) => {
+            this.setState({
+                plugins: data
+            });
+        });
+    }
+
+    turnoffplugins()
+    {
+        let plugins = this.state.plugins.map((obj) => {
+            this.props.setModuleStatus(obj.id, false, () => {});
+            let nObj = obj;
+            nObj.status = false;
+            return nObj;
+        });
+
+        this.setState({
+            plugins: plugins
+        }, () => {
+            console.log(this.state);
+        });
     }
 
     render()
     {
         return (
             <div key="sidebar" style={[styles.container]}>
-                <Menu styles={ menuStyles } width={ 265 } onStateChange={ this.isMenuOpen.bind(this) } noOverlay>
-                    <ColorStateItem />
+                <Menu styles={ menuStyles } width={ 265 } onStateChange={ this.isMenuOpen.bind(this) } noOverlay isOpen>
+                    <ColorStateItem onOffClick={this.turnoffplugins.bind(this)} />
                     <SidebarItem title="Settings" icon="fa fa-cog" />
-                    <SidebarItem title="Plugins">
-                        <SidebarItem title="Twitch plugin" switch={true} handleClick={this.props.pluginClicked}/>
+                    <SidebarItem title="Plugins" handleClick={this.fetchPlugins.bind(this)}>
+                        {this.state.plugins.map((obj, i) => {
+                            return <SidebarItem key={i} title={obj.name} switch={true} switchState={obj.status} handleClick={(e) => this.props.pluginClicked(e)(obj.url)} onToggle={this.onPluginToggle.bind(this)(obj.id)} />;
+                        })}
                     </SidebarItem>
                 </Menu>
             </div>
@@ -34,7 +97,21 @@ class Sidebar extends React.Component {
     }
 }
 
-export default Radium(Sidebar);
+//export default Radium(Sidebar);
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        fetchSidebarPlugins: dashboardActions.fetchSidebarPlugins,
+        setModuleStatus: dashboardActions.setModuleStatus
+    }, dispatch);
+};
+
+const VisibleSidebar = connect(
+    () => { return {}; },
+    mapDispatchToProps
+)(Radium(Sidebar));
+
+export default VisibleSidebar;
 
 var menuStyles = {
     bmBurgerButton: {

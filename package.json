@@ -45,6 +45,7 @@
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "express-ws": "^2.0.0-rc.1",
+    "irc": "^0.5.0",
     "pi-spi": "^1.0.1",
     "radium": "^0.17.1",
     "radium-grid": "^2.0.1",

@@ -13,23 +13,38 @@ class Dashboard extends React.Component {
 
     pluginClicked(e)
     {
-        this.setState({
-            currentPlugin: '/plugin/test_module/'
-        });
+        e.preventDefault();
+        e.stopPropagation();
+
+        return (url) => {
+            this.setState({
+                currentPlugin: url
+            });
+        };
     }
 
     render()
     {
+        let frame = this.state.currentPlugin != '/' ? (<iframe style={[{
+            width: '100%',
+            height: '100%'
+        }]} frameBorder="0" src={this.state.currentPlugin}></iframe>) : null;
+
         return (
             <div className="container" style={[{
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                display: 'flex'
             }]}>
                 <Sidebar pluginClicked={ this.pluginClicked.bind(this) }/>
                 <div style={[{
                     width: '100%',
-                    height: '100%'
+                    height: '100%',
+                    overflow: 'hidden',
+                    paddingLeft: 264,
+                    paddingTop: 0
                 }]}>
+                    {frame}
                 </div>
             </div>
         );

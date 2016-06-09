@@ -5,6 +5,17 @@ const router = express.Router();
 const path = require('path');
 
 global.appRoot = path.resolve(__dirname);
+
+let RGBControl = require('./lib/RGBControl');
+const rgbControl = new RGBControl(app);
+
+require('./lib/RGBFadeIn')(rgbControl);
+require('./lib/RGBFadeOut')(rgbControl);
+require('./lib/RGBSteadyColor')(rgbControl);
+require('./lib/RGBRave')(rgbControl);
+
+global.rgbcontrol = rgbControl;
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

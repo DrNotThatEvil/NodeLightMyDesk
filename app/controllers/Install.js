@@ -2,14 +2,10 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-let RGBControl = require('../../lib/RGBControl');
+const RGBControl = global.rgbcontrol;
 
 
 module.exports = (app) => {
-    RGBControl = new RGBControl(app);
-    require('../../lib/RGBFadeIn')(RGBControl);
-    require('../../lib/RGBFadeOut')(RGBControl);
-
     router.get('/checkinstall', (req, res) => {
         res.json({ installed: fs.existsSync(path.join(global.appRoot, 'config', 'rgbconfig.json')) });
     });
@@ -100,6 +96,21 @@ module.exports = (app) => {
         res.json({ data: [{ set: true }], errors: []});
     });
 
+    router.get('/clearjobs', (req, res) => {
+        if(!RGBControl.checkDeviceReady())
+        {
+            res.json({ data: [], errors: [{
+                error: 'RGBControlNotReady',
+                errorStr: 'RGBControl is not yet ready!'
+            }]});
+            return;
+        }
+
+        RGBControl.clearJobs();
+
+        res.json({ data: [{ set: true }], errors: []});
+    });
+
     router.post('/pulse', (req, res) => {
         if(!RGBControl.checkDeviceReady())
         {
@@ -119,8 +130,8 @@ module.exports = (app) => {
             return;
         }
 
-        RGBControl.newJob('fadein', {color: req.body.color, delay: 5});
-        RGBControl.newJob('fadeout', {color: req.body.color, delay: 5});
+        RGBControl.newJob('fadein', {color: req.body.color, delay: 5, translate: false});
+        RGBControl.newJob('fadeout', {color: req.body.color, delay: 5, translate: false});
 
         res.json({ data: [{ set: true }], errors: []});
     });

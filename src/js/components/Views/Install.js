@@ -60,6 +60,8 @@ class Install extends React.Component {
                 pulseColor = [0, 0, 255];
             }
 
+            this.props.clearJobs();
+
             this.setState({
                 colorMap: newColorMap,
                 colorMapPos: (this.state.colorMapPos == 'r' ? 'g' : 'b'),
@@ -94,6 +96,8 @@ class Install extends React.Component {
     lockLength()
     {
         this.props.setLedLengthLock(true);
+        this.props.clearJobs();
+
         this.setState({
             pulseColor: [255, 0 , 0]
         });
@@ -235,7 +239,8 @@ const mapDispatchToProps = (dispatch) => {
         setNumLedsAsync: serverActions.setNumLedsAsync,
         setLedLengthLock: serverActions.setLedLengthLock,
         setColorMapAsync: serverActions.setColorMapAsync,
-        saveConfig: serverActions.saveConfig
+        saveConfig: serverActions.saveConfig,
+        clearJobs: serverActions.clearJobs
     }, dispatch);
 };
 
