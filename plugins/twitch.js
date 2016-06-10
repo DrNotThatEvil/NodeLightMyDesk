@@ -126,11 +126,20 @@ function fetchLastDonation(cb)
         response.on('end', function() {
 
             // Data reception is done, do whatever with it!
-            var parsed = JSON.parse(body);
-            if(parsed.data.length > 0)
-                cb(parsed.data[0].donation_id, parsed.data[0]);
-            else
+            try
+            {
+                var parsed = JSON.parse(body);
+                if(parsed.data.length > 0)
+                    cb(parsed.data[0].donation_id, parsed.data[0]);
+                else
+                    cb(lastDonationId, {});
+            }
+            catch(e)
+            {
+                console.log(e);
                 cb(lastDonationId, {});
+            }
+
         });
     }).on('error', (e) => {
         console.log("Got an error connecting to twitch alerts:", e);
