@@ -10,13 +10,15 @@ class EmailInterface extends React.Component {
             emailServer: '',
             emailPort: '',
             emailAddress: '',
-            emailPassword: ''
+            emailPassword: '',
+            emailImportant: ''
         };
     }
 
     componentDidMount()
     {
         let loc = window.location.href;
+	loc = loc.substring(0, loc.indexOf('emailstatic/'));
 
         fetch(loc + 'getdata')
         .then(response => response.json())
@@ -31,6 +33,8 @@ class EmailInterface extends React.Component {
         e.stopPropagation();
 
         let loc = window.location.href;
+	loc = loc.substring(0, loc.indexOf('emailstatic/'));
+
 
         fetch(loc + 'setdata',{
             method: 'POST',
@@ -43,7 +47,8 @@ class EmailInterface extends React.Component {
                     emailServer: this.state.emailServer,
                     emailPort: this.state.emailPort,
                     emailAddress: this.state.emailAddress,
-                    emailPassword: this.state.emailPassword
+                    emailPassword: this.state.emailPassword,
+                    emailImportant: this.state.emailImportant
                 }
             })
         })
@@ -129,6 +134,15 @@ class EmailInterface extends React.Component {
                     }]}>
                         <span>Email password:</span>
                         <input type="password" style={[styles.input]} value={this.state.emailPassword} onChange={ (e) => {this.handleChange(e)('emailPassword');} }/>
+                    </div>
+                    <div style={[{
+                        marginTop: 10,
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column'
+                    }]}>
+                        <span>Email important:</span>
+                        <input type="text" style={[styles.input]} value={this.state.emailImportant} onChange={ (e) => {this.handleChange(e)('emailImportant');} }/>
                     </div>
                     <div style={[{
                         marginTop: 10,

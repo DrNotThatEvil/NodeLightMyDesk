@@ -19,6 +19,8 @@ class TwitchInterface extends React.Component {
     componentDidMount()
     {
         let loc = window.location.href;
+	loc = loc.substring(0, loc.indexOf('twitchstatic/'));
+
 
         fetch(loc + 'getdata')
         .then(response => response.json())
@@ -33,6 +35,7 @@ class TwitchInterface extends React.Component {
         e.stopPropagation();
 
         let loc = window.location.href;
+	loc = loc.substring(0, loc.indexOf('twitchstatic/'));
 
         fetch(loc + 'setdata',{
             method: 'POST',

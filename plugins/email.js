@@ -15,7 +15,8 @@ let config = {
     emailServer: '',
     emailPort: '',
     emailAddress: '',
-    emailPassword: ''
+    emailPassword: '',
+    emailImportant: ''
 };
 
 function canConnectToImap()
@@ -63,12 +64,14 @@ function canConnectToImap()
     return true;
 }
 
-function notifyLedstrip()
+function notifyLedstrip(important)
 {
     let curColor = RGBControl.getColor();
+    let color = ((important || false) ? [255, 0, 0] : [0, 0, 255]);
+
     RGBControl.newJob('fadeout', {color: [curColor[0], curColor[1], curColor[2]], delay: 2, translate: true});
-    RGBControl.newJob('fadein', {color: [0, 0, 255], delay: 2, translate: true});
-    RGBControl.newJob('fadeout', {color: [0, 0, 255], delay: 2, translate: true});
+    RGBControl.newJob('fadein', {color: color, delay: 2, translate: true});
+    RGBControl.newJob('fadeout', {color: color, delay: 2, translate: true});
     RGBControl.newJob('fadein', {color: [curColor[0], curColor[1], curColor[2]], delay: 2, translate: true});
     RGBControl.newJob('steadycolor', {color: [curColor[0], curColor[1], curColor[2]], translate: true}, {repeat: true});
 }
@@ -84,27 +87,65 @@ function connectToImap()
         host: config.emailServer,
         port: config.emailPort,
         tls: true,
-        mailbox: 'INBOX'
+        mailbox: 'INBOX',
+        authTimeout: 15000,
+	connectTimeout: 30000
     };
 
     imapClient = new SimpleImap(imapConfig);
 
     imapClient.on('error', (err) => {
     	console.log(err);
+	console.log('Retrying connection in 7 seconds');
+
+	setTimeout(function() { connectToImap() }, 7000);
     });
 
     imapClient.on('mail', (mail) => {
-        if(status)
+
+        //console.log(mail);
+        let foundImportant = false;
+        let split = config.emailImportant.split(',');
+        split.forEach((val) => {
+            let nVal = val.trim().toLowerCase();
+
+            mail.from.forEach((from) => {
+                if(from.address.toLowerCase().indexOf(nVal) != -1)
+                {
+                    foundImportant = true;
+                }
+
+                if(from.name.toLowerCase().indexOf(nVal) != -1)
+                {
+                    foundImportant = true;
+                }
+            });
+
+            if(mail.subject.toLowerCase().indexOf(nVal) != -1)
+            {
+                foundImportant = true;
+            }
+        });
+
+        if(!foundImportant)
         {
-            console.log('NEW EMAIL');
-            notifyLedstrip();
-            newEmailCount = 0; //Reset the email count cause we notified the user.
+            if(status)
+            {
+                console.log('NEW EMAIL');
+                notifyLedstrip(false);
+                newEmailCount = 0; //Reset the email count cause we notified the user.
+            }
+            else
+            {
+                console.log('NEW EMAIL BUT CURRENTLY OFF');
+                console.log('Adding to email count!');
+                newEmailCount++;
+            }
         }
         else
         {
-            console.log('NEW EMAIL BUT CURRENTLY OFF');
-            console.log('Adding to email count!');
-            newEmailCount++;
+            console.log('NEW IMPORTANT EMAIL');
+            notifyLedstrip(true);
         }
     });
 
@@ -146,7 +187,7 @@ function setData(setconfig)
 
 function addRoutes(router)
 {
-    router.use(express.static(path.join(__dirname, 'email', 'static')));
+    router.use('/emailstatic', express.static(path.join(__dirname, 'email', 'static')));
 
     router.get('/getdata', (req, res) => {
         res.json({ data: [config], errors: []});
@@ -209,7 +250,7 @@ function setStatus(val)
 
     if(val && newEmailCount > 0)
     {
-        notifyLedstrip();
+        notifyLedstrip(false);
         newEmailCount = 0;
     }
 }
@@ -224,7 +265,8 @@ function getSidebarData()
     return {
         id: 'email',
         name: 'Email Plugin',
-        url: '/plugin/email/',
+        url: '/plugin/email/emailstatic/',
+	apiurl: '/plugin/email/',
         status: status
     };
 }

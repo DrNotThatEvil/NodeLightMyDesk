@@ -5,6 +5,7 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const irc = require('irc');
+var Client = require("irc-client");
 const Color = require('color');
 
 let app;
@@ -151,6 +152,9 @@ function donationCheckLoop()
     if(!canConnectToTwitchAlert())
         return;
 
+    if(!status)
+        return;
+
     fetchLastDonation((id, data) => {
         if(id != lastDonationId)
         {
@@ -280,17 +284,20 @@ function connectIrc()
         return;
 
     ircClient = new irc.Client(config.twitchServer, config.twitchNick, {
-        floodProtection: true,
+        floodProtection: false,
         debug: false,
         autoRejoin: true,
-        autoConnect: false,
+        autoConnect: true,
+        userName: config.twitchNick,
+        password: 'oauth:'+config.twitchOauth,
+        secure: false,
+        port: config.twitchPort,
         channels: ['#'+config.twitchChannel],
-        realName: 'One happy little irc bot.'
+	millisecondsBeforePingTimeout: 15 * 1000,
+	millisecondsOfSilenceBeforePingSent: 45 * 1000
     });
 
-    ircClient.connect();
-    ircClient.send('PASS', 'oauth:'+config.twitchOauth);
-
+    //ircClient.connect();
     ircClient.addListener('error', function (message) {
         console.log('error: ', message);
     });
@@ -336,7 +343,7 @@ function setData(setconfig)
 
 function addRoutes(router)
 {
-    router.use(express.static(path.join(__dirname, 'twitch', 'static')));
+    router.use('/twitchstatic', express.static(path.join(__dirname, 'twitch', 'static')));
 
     router.get('/getdata', (req, res) => {
         res.json({ data: [config], errors: []});
@@ -426,7 +433,8 @@ function getSidebarData()
     return {
         id: 'twitch',
         name: 'Twitch Plugin',
-        url: '/plugin/twitch/',
+        url: '/plugin/twitch/twitchstatic/',
+	apiurl: '/plugin/twitch/',
         status: status
     };
 }
