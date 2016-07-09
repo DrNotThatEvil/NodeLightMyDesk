@@ -151,11 +151,11 @@ function connectBeam()
         password: config.password
     }).attempt().then(function () {
         console.log('Connected to beam!');
-        return beam.game.join(config.streamId);
+        return beam.game.join(parseInt(config.streamId));
     }).then(function (res) {
         var details = {
             remote: res.body.address,
-            channel: config.streamId,
+            channel: parseInt(config.streamId),
             key: res.body.key
         };
 
@@ -330,14 +330,12 @@ function addRoutes(router)
 {
     router.use('/beamprostatic', express.static(path.join(__dirname, 'beampro', 'static')));
 
-    router.get('/getdata', (req, res) => {
+    router.get('/getbeamdata', (req, res) => {
         res.json({ data: [config], errors: []});
     });
 
-    router.post('/setdata', (req, res) => {
-
-
-        //setData(req.body.config);
+    router.post('/setbeamdata', (req, res) => {
+        setData(req.body.config);
         res.json({ data: [{ set: true, value: config }], errors: []});
     });
 }

@@ -345,11 +345,11 @@ function addRoutes(router)
 {
     router.use('/twitchstatic', express.static(path.join(__dirname, 'twitch', 'static')));
 
-    router.get('/getdata', (req, res) => {
+    router.get('/gettwitchdata', (req, res) => {
         res.json({ data: [config], errors: []});
     });
 
-    router.post('/setdata', (req, res) => {
+    router.post('/settwitchdata', (req, res) => {
         if(!('config' in req.body))
         {
             res.json({ data: [], errors: [{

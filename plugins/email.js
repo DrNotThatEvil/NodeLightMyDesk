@@ -189,11 +189,11 @@ function addRoutes(router)
 {
     router.use('/emailstatic', express.static(path.join(__dirname, 'email', 'static')));
 
-    router.get('/getdata', (req, res) => {
+    router.get('/getemaildata', (req, res) => {
         res.json({ data: [config], errors: []});
     });
 
-    router.post('/setdata', (req, res) => {
+    router.post('/setemaildata', (req, res) => {
         if(!('config' in req.body))
         {
             res.json({ data: [], errors: [{

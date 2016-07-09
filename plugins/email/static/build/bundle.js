@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5ff5250ec95edf716761"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "140754d971b47b3359bd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -25372,7 +25372,7 @@
 	            var loc = window.location.href;
 	            loc = loc.substring(0, loc.indexOf('emailstatic/'));
 
-	            fetch(loc + 'getdata').then(function (response) {
+	            fetch(loc + 'getemaildata').then(function (response) {
 	                return response.json();
 	            }).then(function (json) {
 	                _this2.setState(json.data[0]);
@@ -25387,7 +25387,7 @@
 	            var loc = window.location.href;
 	            loc = loc.substring(0, loc.indexOf('emailstatic/'));
 
-	            fetch(loc + 'setdata', {
+	            fetch(loc + 'setemaildata', {
 	                method: 'POST',
 	                headers: {
 	                    'Accept': 'application/json',

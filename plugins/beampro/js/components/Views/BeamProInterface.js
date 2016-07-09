@@ -19,7 +19,7 @@ class TwitchInterface extends React.Component {
         let loc = window.location.href;
 	       loc = loc.substring(0, loc.indexOf('beamprostatic/'));
 
-        fetch(loc + 'getdata')
+        fetch(loc + 'getbeamdata')
         .then(response => response.json())
         .then(json => {
             this.setState(json.data[0]);
@@ -34,7 +34,7 @@ class TwitchInterface extends React.Component {
         let loc = window.location.href;
         loc = loc.substring(0, loc.indexOf('beamprostatic/'));
 
-        fetch(loc + 'setdata',{
+        fetch(loc + 'setdatadata',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

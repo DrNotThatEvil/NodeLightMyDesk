@@ -20,7 +20,7 @@ class EmailInterface extends React.Component {
         let loc = window.location.href;
 	loc = loc.substring(0, loc.indexOf('emailstatic/'));
 
-        fetch(loc + 'getdata')
+        fetch(loc + 'getemaildata')
         .then(response => response.json())
         .then(json => {
             this.setState(json.data[0]);
@@ -36,7 +36,7 @@ class EmailInterface extends React.Component {
 	loc = loc.substring(0, loc.indexOf('emailstatic/'));
 
 
-        fetch(loc + 'setdata',{
+        fetch(loc + 'setemaildata',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
