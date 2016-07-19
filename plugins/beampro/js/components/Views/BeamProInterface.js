@@ -10,6 +10,7 @@ class TwitchInterface extends React.Component {
             streamId: '',
             username: '',
             password: '',
+            facode: '',
             streamJarApi: ''
         };
     }
@@ -34,7 +35,7 @@ class TwitchInterface extends React.Component {
         let loc = window.location.href;
         loc = loc.substring(0, loc.indexOf('beamprostatic/'));
 
-        fetch(loc + 'setdatadata',{
+        fetch(loc + 'setbeamdata',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -45,6 +46,7 @@ class TwitchInterface extends React.Component {
                     streamId: this.state.streamId,
                     username: this.state.username,
                     password: this.state.password,
+                    facode: this.state.facode,
                     streamJarApi: this.state.streamJarApi
                 }
             })
@@ -122,6 +124,15 @@ class TwitchInterface extends React.Component {
                     }]}>
                         <span>Beampro password:</span>
                         <input type="password" style={[styles.input]} value={this.state.password} onChange={ (e) => {this.handleChange(e)('password');} }/>
+                    </div>
+                    <div style={[{
+                        marginTop: 10,
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column'
+                    }]}>
+                        <span>Beampro 2 Factor code:</span>
+                        <input type="facode" style={[styles.input]} value={this.state.facode} onChange={ (e) => {this.handleChange(e)('facode');} }/>
                     </div>
                     <div style={[{
                         marginTop: 10

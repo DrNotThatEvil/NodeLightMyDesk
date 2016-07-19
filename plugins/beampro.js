@@ -21,6 +21,7 @@ let config = {
     streamId: '',
     username: '',
     password: '',
+    facode: '',
     streamJarApi: ''
 };
 
@@ -148,7 +149,8 @@ function connectBeam()
 
     beam.use('password', {
         username: config.username,
-        password: config.password
+        password: config.password,
+        code: config.facode
     }).attempt().then(function () {
         console.log('Connected to beam!');
         return beam.game.join(parseInt(config.streamId));
@@ -291,7 +293,7 @@ function connectBeam()
             }
         });
     }).catch(function(reason){
-        console.log('Beam error woups', reason);
+        console.log('Beam error woups');
     });
 }
 
@@ -370,7 +372,7 @@ function getSidebarData()
 function initPlugin()
 {
     loadData();
-    connectBeam();
+    //connectBeam();
     connectToStreamJar();
 }
 
