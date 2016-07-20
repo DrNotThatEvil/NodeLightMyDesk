@@ -74,6 +74,7 @@
     "socket.io-client": "^1.4.8",
     "style-loader": "*",
     "webpack-dev-server": "^1.14.1",
+    "whatwg-fetch": "^1.0.0",
     "ws": "^1.1.1"
   }
 }

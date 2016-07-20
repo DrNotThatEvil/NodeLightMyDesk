@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ['webpack/hot/dev-server', __dirname + '/src/js/entry.js']
+        app: ['webpack/hot/dev-server', 'whatwg-fetch', __dirname + '/src/js/entry.js']
     },
     output: {
         filename: 'bundle.js',

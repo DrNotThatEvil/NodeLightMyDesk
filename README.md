@@ -5,7 +5,7 @@ I made this cause my old i wanted to rewrite my old lightmydesk system witch use
 this system now uses NodeJS its a complete re-write and it is more stable than the previous version.
 
 There are still some bugs one of them being that the raspberry pi can run out of memory
-i currently have a program called supervisor on my raspberry pi that restarts the system in case this happens to make it usable while i figure 
+i currently have a program called supervisor on my raspberry pi that restarts the system in case this happens to make it usable while i figure
 out why this happens.
 
 but for the most part its more stable than the previous version...
@@ -26,11 +26,13 @@ I would like to make more plugins some future ideas are:
 * Twitter notify: a plugin that flashes the ledstrip when you recieve a tweet with configurable criteria (only @ tweets for example or all tweets)
 
 Also i would like to add things to the core system like:
-* Ipad and Iphone compatibility: For some reason iphones and ipads do not show to interface but a blank page witch needs to be fixed cause its anying me
-* A state restore system for when a crash ocours
+* A state restore system for when a crash happens
 * More animations.
 * System settings: currently i include a settings menu item but i have not yet populated the page.
 * More ledstrip chip types: only the LPD6803 is currently supported.
+
+Fixed bugs:
+* Ipad and iphone compatibility is fixed!
 
 # Please note
 This code is still in **heavy development** i still need to fix a lot of bugs. I also need to do a bit of code clean up since have included eslint at a later date i still need to rework to code to pass the eslint tests but i plan to do so when the code becomes more stable and a few bugs are fixed.
