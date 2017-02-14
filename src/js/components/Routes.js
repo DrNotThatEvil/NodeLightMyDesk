@@ -116,6 +116,8 @@ class Routes extends React.Component
                 hashHistory.replace('/');
             }
         });
+
+	this.requireInstall = this.requireInstall.bind(this);
     }
 
     handleData(data)
@@ -141,9 +143,7 @@ class Routes extends React.Component
             <RoutesBg>
                 <Router history={hashHistory}>
                     <Route path="/install" component={Install} />
-                    <Route path="/" component={Dashboard} onEnter={this.requireInstall.bind(this)}>
-
-                    </Route>
+                    <Route path="/" component={Dashboard} onEnter={this.requireInstall} />
                 </Router>
             </RoutesBg>
         );

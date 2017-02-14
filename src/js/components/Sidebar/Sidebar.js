@@ -136,7 +136,8 @@ var menuStyles = {
         background: SidebarStyle.menuBg,
         padding: 0,
         fontSize: '1.15em',
-        borderRight: '1px solid ' + Color(SidebarStyle.menuBg).darken(0.05).hexString()
+        BorderRight: '1px solid ' + Color(SidebarStyle.menuBg).darken(0.05).hexString(),
+	overflow: 'hidden',
     },
     bmMorphShape: {
         fill: '#373a47'
