@@ -96,12 +96,12 @@ function connectToImap()
 
   imapClient = new SimpleImap(imapConfig);
 
-  //imapClient.on('error', (err) => {
-  //  console.log(err);
-  //  console.log('Retrying connection in 7 seconds');
+  imapClient.on('error', (err) => {
+    console.log(err);
+    console.log('Retrying connection in 7 seconds');
 
-  //  setTimeout(function() { connectToImap() }, 7000);
-  //});
+    setTimeout(function() { connectToImap() }, 7000);
+  });
 
   imapClient.on('mail', (mail) => {
 
@@ -145,10 +145,6 @@ function connectToImap()
     {
       notifyLedstrip(true);
     }
-  });
-
-  imapClient.on('error', (err) => {
-    console.log('Imap error:', err);
   });
 
   imapClient.on('end', () => {
