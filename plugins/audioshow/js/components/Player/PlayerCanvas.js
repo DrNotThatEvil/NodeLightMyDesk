@@ -63,7 +63,11 @@ class PlayerCanvas extends React.Component {
 
     fetch('https://api.soundcloud.com/resolve.json?url=' + trackPermalinkUrl + '&' + clientid, { mode: 'no-cors' })
       .then(response => {
-        console.log(response);
+        fetch(response.headers.get('Location'))
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);  
+          });
       });
       //.then(json => {
       //  console.log(json);
