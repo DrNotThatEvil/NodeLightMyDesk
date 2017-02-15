@@ -51,7 +51,7 @@ class PlayerCanvas extends React.Component {
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.audio = new Audio();
     this.audio.crossOrigin = 'anonymous';
-    this.audiosource = this.audioContext.createMediaElementsSource(this.audio);
+    this.audiosource = this.audioContext.createMediaElementSource(this.audio);
     this.audiosource.connect(this.audioContext.destination);
     this.analyser = this.audioContext.createAnalyser();
     this.audiosource.connect(this.analyser);
