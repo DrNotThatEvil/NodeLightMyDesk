@@ -62,7 +62,7 @@ function getStatus()
 function getSidebarData()
 {
   return {
-    id: 'audiovisualzer',
+    id: 'audiovisualizer',
     name: 'Audio Visualizer',
     url: '/plugin/audiovisualizer/visualizerstatic/',
     apiurl: '/plugin/audiovisualizer/',
@@ -78,7 +78,7 @@ function initPlugin()
 module.exports = function(module_holder) {
   // the key in this dictionary can be whatever you want
   // just make sure it won't override other modules
-  module_holder['auidovisualizer'] = {
+  module_holder['audiovisualizer'] = {
     addRoutes: addRoutes,
     setStatus: setStatus,
     getStatus: getStatus,
