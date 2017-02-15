@@ -1,4 +1,3 @@
-var webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -38,9 +37,9 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-     new webpack.HotModuleReplacementPlugin()
-  ],
+//  plugins: [
+//     new webpack.HotModuleReplacementPlugin()
+//  ],
   resolve: {
     extensions: ['', '.js', '.json', '.scss']
   }
