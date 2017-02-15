@@ -26,7 +26,7 @@ class PlayerCanvas extends React.Component {
     }
 
     this.canvasContext.stroke();
-    var tempIsIncreasing;
+    var tempIsIncreasing = false;
     var tempAmplitude = this.state.amplitude;
     
     if(tempAmplitude > 100) {
@@ -48,7 +48,8 @@ class PlayerCanvas extends React.Component {
   } 
 
   initAudio() {
-    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.audioContext = new AudioContext();
     this.audio = new Audio();
     this.audio.crossOrigin = 'anonymous';
     this.audiosource = this.audioContext.createMediaElementSource(this.audio);
