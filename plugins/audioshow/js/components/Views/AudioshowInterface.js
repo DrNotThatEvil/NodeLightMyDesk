@@ -84,28 +84,25 @@ class AudioshowInterface extends React.Component {
           color: '#FFFFFF'
         }]}>
           <div style={[{
-            marginTop: 10
+            marginTop: 10,
+            display: 'flex',
+            alignItems: 'center',
+            alignContent: 'space-around'
           }]}>
-            <img src={require('../../../img/email_logo.png')} style={[{
-              width: 100,
-              height: 100
+            <img src={require('../../../img/soundcloud_logo.png')} style={[{
+              width: 70,
+              height: 70
             }]}/>
-          </div>
-          <div style={[{
-            marginTop: 10,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }]}>
-            <span>Soundcloud Api token:</span>
-            <input type="text" style={[styles.input]} value={this.state.soundcloudApi} onChange={ (e) => {this.handleChange(e)('soundcloudApi');} }/>
-          </div>
-          <div style={[{
-            marginTop: 10,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }]}>
+            <div style={[{
+              marginLeft: 15,
+              marginRight: 15,
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }]}>
+              <span>Soundcloud Api token:</span>
+              <input type="text" style={[styles.input]} value={this.state.soundcloudApi} onChange={ (e) => {this.handleChange(e)('soundcloudApi');} }/>
+            </div>
             <input type="submit" style={[styles.submit]} value="Save settings" onClick={this.saveData.bind(this)}/>
           </div>
         </div>
@@ -121,29 +118,30 @@ var styles = {
   {
     marginTop: 10,
     display: 'block',
-    border: '3px solid #2468FF',
+    border: '3px solid #88FF00',
     backgroundColor: '#060D1E',
-    height: 60,
-    width: 350,
-    fontSize: '24px',
-    padding: 10,
-    color: '#2468FF',
+    height: 10,
+    width: '200px',
+    fontSize: '15px',
+    padding: 5,
+    color: '#88FF00',
     fontFamily: 'cabinregular',
     textAlign: 'center'
   },
   submit:
   {
-    marginTop: 0,
+    marginLeft: 15,
+    marginRight: 15,
     display: 'block',
     border: '3px solid ' + Color('#ff8800').darken(0.25).hexString(),
     backgroundColor: '#ff8800',
-    height: 60,
-    width: 350,
-    fontSize: '24px',
-    padding: 10,
+    height: 30,
+    width: 200,
+    fontSize: '16px',
+    padding: 2,
     color: '#FFFFFF',
     fontFamily: 'cabinbold',
     textAlign: 'center',
-    borderRadius: 15
+    borderRadius: 5
   }
 };
