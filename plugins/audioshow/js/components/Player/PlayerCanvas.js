@@ -48,8 +48,7 @@ class PlayerCanvas extends React.Component {
   } 
 
   initAudio() {
-    var AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.audioContext = new AudioContext();
+    this.audioContext = new window.AudioContext();
     this.audio = new Audio();
     this.audio.crossOrigin = 'anonymous';
     this.audiosource = this.audioContext.createMediaElementSource(this.audio);
@@ -63,10 +62,12 @@ class PlayerCanvas extends React.Component {
     var clientid = 'client_id=2341a3bad20c6cf96367911d6458a1cc';
 
     fetch('https://api.soundcloud.com/resolve.json?url=' + trackPermalinkUrl + '&' + clientid, { mode: 'no-cors' })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
+      .then(response => {
+        console.log(response);
       });
+      //.then(json => {
+      //  console.log(json);
+      //});
   }
 
   componentDidMount() {
