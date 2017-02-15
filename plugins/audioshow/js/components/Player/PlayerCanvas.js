@@ -29,9 +29,9 @@ class PlayerCanvas extends React.Component {
     var tempIsIncreasing;
     var tempAmplitude = this.state.amplitude;
     
-    if(tempAmplitude >= 100) {
+    if(tempAmplitude > 100) {
       tempIsIncreasing = false;
-    } else if(tempAmplitude <= 1) {
+    } else if(tempAmplitude < 1) {
       tempIsIncreasing = true;
     } 
 
@@ -50,15 +50,15 @@ class PlayerCanvas extends React.Component {
   initAudio() {
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.audio = new Audio();
-    this.audio.crossOrigin = "anonymous";
-    this.audiosource = audioContext.createMeddiaElementsSource(audio);
-    this.audiosource.connect(audioContext.destination);
-    this.analyser = audioContext.createAnalyser();
+    this.audio.crossOrigin = 'anonymous';
+    this.audiosource = this.audioContext.createMediaElementsSource(this.audio);
+    this.audiosource.connect(this.audioContext.destination);
+    this.analyser = this.audioContext.createAnalyser();
     this.audiosource.connect(this.analyser);
   }
 
   findTrack() {
-    var trackPermalinkUrl = "https://soundcloud.com/the-outsider/the-outsider-death-by-melody";
+    var trackPermalinkUrl = 'https://soundcloud.com/the-outsider/the-outsider-death-by-melody';
     var clientid = 'client_id=2341a3bad20c6cf96367911d6458a1cc';
 
     fetch(trackPermalinkUrl+ '&' + clientid)
@@ -73,6 +73,8 @@ class PlayerCanvas extends React.Component {
     this.canvasWidth = this.canvas.width;
     this.canvasHeight = this.canvas.height;
     this.idleAnimation();
+    this.initAudio();
+    this.findTrack();
   }
 
   render() {
