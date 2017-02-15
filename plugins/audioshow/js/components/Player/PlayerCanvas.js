@@ -62,7 +62,7 @@ class PlayerCanvas extends React.Component {
     var trackPermalinkUrl = 'https://soundcloud.com/the-outsider/the-outsider-death-by-melody';
     var clientid = 'client_id=2341a3bad20c6cf96367911d6458a1cc';
 
-    fetch(trackPermalinkUrl+ '&' + clientid)
+    fetch('https://api.soundcloud.com/resolve.json?url=' + trackPermalinkUrl + '&' + clientid, { mode: 'no-cors' })
       .then(response => response.json())
       .then(json => {
         console.log(json);
