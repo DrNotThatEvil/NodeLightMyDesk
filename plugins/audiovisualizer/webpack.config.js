@@ -1,5 +1,3 @@
-var webpack = require('webpack');
-
 module.exports = {
   entry: {
     app: ['webpack/hot/dev-server', 'whatwg-fetch', __dirname + '/js/entry.js']
@@ -37,9 +35,9 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  //plugins: [
+  //  new webpack.HotModuleReplacementPlugin()
+  //],
   resolve: {
     extensions: ['', '.js', '.json', '.scss']
   }
