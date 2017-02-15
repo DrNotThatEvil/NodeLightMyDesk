@@ -35,6 +35,16 @@ app.use('/', router);
 var server = require('http').createServer(app);
 var public_server = require('http').createServer(public_app);
 
+server.on('error', function(err) {
+  console.log('LightMyDesk server had a error:');
+  console.log(err)
+});
+
+public_server.on('error', function(err) {
+  console.log('LightMyDesk Public server had a error:');
+  console.log(err)
+});
+
 server.listen(3000, () => {
   console.log('LightMyDesk is admin is listening on port 3000!');
 });
