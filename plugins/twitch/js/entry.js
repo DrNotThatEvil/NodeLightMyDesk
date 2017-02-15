@@ -10,10 +10,10 @@ require('../css/font-awesome.min.css');
 require('../css/main.css');
 
 ReactDom.render(
-    (
-        <StyleRoot style={[{margin: 0, width: '100%', height: '100%'}]}>
-            <TwitchInterface />
-        </StyleRoot>
-    ),
-    document.getElementById('app')
+  (
+    <StyleRoot style={[{margin: 0, width: '100%', height: '100%'}]}>
+      <TwitchInterface />
+    </StyleRoot>
+  ),
+  document.getElementById('app')
 );

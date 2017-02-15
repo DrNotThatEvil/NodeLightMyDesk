@@ -17,12 +17,12 @@ const store = configureStore();
 //store.dispatch(serverActions.fetchInstalled());
 
 ReactDom.render(
-    (
-        <Provider store={store}>
-            <StyleRoot style={[{margin: 0, width: '100%', height: '100%'}]}>
-                <Routes />
-            </StyleRoot>
-        </Provider>
-    ),
-    document.getElementById('app')
+  (
+    <Provider store={store}>
+      <StyleRoot style={[{margin: 0, width: '100%', height: '100%'}]}>
+        <Routes />
+      </StyleRoot>
+    </Provider>
+  ),
+  document.getElementById('app')
 );

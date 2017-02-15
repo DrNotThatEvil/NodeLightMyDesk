@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const public_app = express();
 
+
+process.on('uncaughtException', function (err) {
+  console.error(err.stack);
+  console.log("Node NOT Exiting...");
+});
+
 const router = express.Router();
 const path = require('path');
 
@@ -35,10 +41,20 @@ app.use('/', router);
 var server = require('http').createServer(app);
 var public_server = require('http').createServer(public_app);
 
+server.on('error', function(err) {
+  console.log('LightMyDesk server had a error:');
+  console.log(err)
+});
+
+public_server.on('error', function(err) {
+  console.log('LightMyDesk Public server had a error:');
+  console.log(err)
+});
+
 server.listen(3000, () => {
-    console.log('LightMyDesk is admin is listening on port 3000!');
+  console.log('LightMyDesk is admin is listening on port 3000!');
 });
 
 public_server.listen(3080, () => {
-    console.log('The public interface for LightMyDesk is listening on port 3080!');
+  console.log('The public interface for LightMyDesk is listening on port 3080!');
 });
