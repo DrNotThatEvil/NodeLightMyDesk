@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const public_app = express();
 
+
+process.on('uncaughtException', function (err) {
+  console.error(err.stack);
+  console.log("Node NOT Exiting...");
+});
+
 const router = express.Router();
 const path = require('path');
 
