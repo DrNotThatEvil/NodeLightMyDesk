@@ -13,6 +13,8 @@ class PlayerCanvas extends React.Component {
   }
 
   IdleAnimation() {
+    this.canvasContext.lineWidth = 1;
+    this.canvasCOntext.strokeStyle = 'rgba(0, 0, 0, 1)';
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     if(this.state.playing == false) {
       requestAnimationFrame(this.idleAnimation.bind(this));
