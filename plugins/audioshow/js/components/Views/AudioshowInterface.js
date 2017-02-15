@@ -2,6 +2,8 @@ import React from 'react';
 import Radium from 'radium';
 import Color from 'color';
 
+import PlayerCanvas from '../Player/PlayerCanvas';
+
 class AudioshowInterface extends React.Component {
   constructor(props)
   {
@@ -105,6 +107,7 @@ class AudioshowInterface extends React.Component {
             </div>
             <input type="submit" style={[styles.submit]} value="Save settings" onClick={this.saveData.bind(this)}/>
           </div>
+          <PlayerCanvas />
         </div>
       </div>
     );
@@ -118,7 +121,7 @@ var styles = {
   {
     marginTop: 10,
     display: 'block',
-    border: '3px solid #88FF00',
+    border: '3px solid #FF8800',
     backgroundColor: '#060D1E',
     height: 10,
     width: '200px',
