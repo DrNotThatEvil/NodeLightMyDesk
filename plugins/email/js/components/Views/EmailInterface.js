@@ -21,10 +21,10 @@ class EmailInterface extends React.Component {
     loc = loc.substring(0, loc.indexOf('emailstatic/'));
 
     fetch(loc + 'getemaildata')
-    .then(response => response.json())
-    .then(json => {
-      this.setState(json.data[0]);
-    });
+      .then(response => response.json())
+      .then(json => {
+        this.setState(json.data[0]);
+      });
   }
 
   saveData(e)

@@ -12,13 +12,12 @@ class PlayerCanvas extends React.Component {
     };
   }
 
-  IdleAnimation() {
-    console.log('animateddd !');
+  idleAnimation() {
     this.canvasContext.lineWidth = 1;
     this.canvasContext.strokeStyle = 'rgba(0, 0, 0, 1)';
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     if(this.state.playing == false) {
-      requestAnimationFrame(this.IdleAnimation.bind(this));
+      requestAnimationFrame(this.idleAnimation.bind(this));
     }
 
     this.canvasContext.beginPath();
@@ -46,18 +45,42 @@ class PlayerCanvas extends React.Component {
       amplitude: tempAmplitude,
       phase: (this.state.phase+1)
     });
+  } 
+
+  initAudio() {
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    this.audio = new Audio();
+    this.audio.crossOrigin = "anonymous";
+    this.audiosource = audioContext.createMeddiaElementsSource(audio);
+    this.audiosource.connect(audioContext.destination);
+    this.analyser = audioContext.createAnalyser();
+    this.audiosource.connect(this.analyser);
+  }
+
+  findTrack() {
+    var trackPermalinkUrl = "https://soundcloud.com/the-outsider/the-outsider-death-by-melody";
+    var clientid = 'client_id=2341a3bad20c6cf96367911d6458a1cc';
+
+    fetch(trackPermalinkUrl+ '&' + clientid)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      });
   }
 
   componentDidMount() {
     this.canvasContext = this.canvas.getContext('2d');
     this.canvasWidth = this.canvas.width;
     this.canvasHeight = this.canvas.height;
-    this.IdleAnimation();
+    this.idleAnimation();
   }
 
   render() {
     return (
-      <canvas ref={(c) => { this.canvas = c; }} />
+      <div>
+        <canvas ref={(c) => { this.canvas = c; }} width="512" height="256"/>
+        <audio ref={(a) => { this.audio = a; }} />
+      </div>
     );
   }
 }
