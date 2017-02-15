@@ -42,11 +42,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/home/wilvin/development/NodeLightMyDesk/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/home/wilvin/development/NodeLightMyDesk/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
 	//var webpack = require('webpack');
 
@@ -70,7 +68,7 @@
 	    loaders: [{
 	      test: /\.js$/,
 	      exclude: /(node_modules|bower_components)/,
-	      loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react']
+	      loaders: ['babel?presets[]=es2015,presets[]=stage-0,presets[]=react']
 	    }, {
 	      test: /\.css$/,
 	      loaders: ['style', 'css']
@@ -89,8 +87,6 @@
 	    extensions: ['', '.js', '.json', '.scss']
 	  }
 	};
-
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/wilvin/development/NodeLightMyDesk/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "webpack.config.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }
