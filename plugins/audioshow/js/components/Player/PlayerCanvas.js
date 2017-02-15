@@ -17,7 +17,7 @@ class PlayerCanvas extends React.Component {
     this.canvasContext.strokeStyle = 'rgba(0, 0, 0, 1)';
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     if(this.state.playing == false) {
-      requestAnimationFrame(this.idleAnimation.bind(this));
+      requestAnimationFrame(this.IdleAnimation.bind(this));
     }
 
     this.canvasContext.beginPath();
