@@ -36,9 +36,9 @@ var server = require('http').createServer(app);
 var public_server = require('http').createServer(public_app);
 
 server.listen(3000, () => {
-    console.log('LightMyDesk is admin is listening on port 3000!');
+  console.log('LightMyDesk is admin is listening on port 3000!');
 });
 
 public_server.listen(3080, () => {
-    console.log('The public interface for LightMyDesk is listening on port 3080!');
+  console.log('The public interface for LightMyDesk is listening on port 3080!');
 });
