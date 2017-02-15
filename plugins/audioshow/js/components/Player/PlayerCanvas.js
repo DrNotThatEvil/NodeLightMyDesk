@@ -13,6 +13,7 @@ class PlayerCanvas extends React.Component {
   }
 
   IdleAnimation() {
+    console.log('animateddd !');
     this.canvasContext.lineWidth = 1;
     this.canvasContext.strokeStyle = 'rgba(0, 0, 0, 1)';
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -43,7 +44,7 @@ class PlayerCanvas extends React.Component {
 
     this.setState({
       amplitude: tempAmplitude,
-      phase: this.tempAmplitude
+      phase: (this.state.phase+1)
     });
   }
 
