@@ -1,4 +1,5 @@
-const path = require('path');
+var webpack = require('webpack');
+var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
   entry: {
@@ -37,9 +38,9 @@ module.exports = {
       }
     ]
   },
-//  plugins: [
-//     new webpack.HotModuleReplacementPlugin()
-//  ],
+  plugins: [
+    new UglifyJsPlugin({ minimize: true })
+  ],
   resolve: {
     extensions: ['', '.js', '.json', '.scss']
   }
