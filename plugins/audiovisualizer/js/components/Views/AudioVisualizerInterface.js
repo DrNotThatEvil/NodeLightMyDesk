@@ -2,25 +2,21 @@ import React from 'react';
 import Radium from 'radium';
 import Color from 'color';
 
-class EmailInterface extends React.Component {
+class AudioVisualizerInterface extends React.Component {
   constructor(props)
   {
     super(props);
     this.state = {
-      emailServer: '',
-      emailPort: '',
-      emailAddress: '',
-      emailPassword: '',
-      emailImportant: ''
+      soundcloudApiToken: '',
     };
   }
 
   componentDidMount()
   {
     let loc = window.location.href;
-    loc = loc.substring(0, loc.indexOf('emailstatic/'));
+    loc = loc.substring(0, loc.indexOf('visualizerstatic/'));
 
-    fetch(loc + 'getemaildata')
+    fetch(loc + 'getvisulizerdata')
     .then(response => response.json())
     .then(json => {
       this.setState(json.data[0]);
@@ -33,10 +29,10 @@ class EmailInterface extends React.Component {
     e.stopPropagation();
 
     let loc = window.location.href;
-    loc = loc.substring(0, loc.indexOf('emailstatic/'));
+    loc = loc.substring(0, loc.indexOf('visualizerstatic/'));
 
 
-    fetch(loc + 'setemaildata',{
+    fetch(loc + 'setvisualizerdata',{
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -44,11 +40,7 @@ class EmailInterface extends React.Component {
       },
       body: JSON.stringify({
         config: {
-          emailServer: this.state.emailServer,
-          emailPort: this.state.emailPort,
-          emailAddress: this.state.emailAddress,
-          emailPassword: this.state.emailPassword,
-          emailImportant: this.state.emailImportant
+          soundcloudApiToken: this.state.soundcloudApiToken,
         }
       })
     })
@@ -82,7 +74,7 @@ class EmailInterface extends React.Component {
           height: 900,
           overflow: 'hidden',
           backgroundColor: Color('#2c503e').lighten(0.50).hexString(),
-          border: '2px solid #2c503e',
+          border: '2px solid #ff3a00',
           borderRadius: 15,
           display: 'flex',
           alignItems: 'center',
@@ -94,7 +86,7 @@ class EmailInterface extends React.Component {
           <div style={[{
             marginTop: 10
           }]}>
-            <img src={require('../../../img/email_logo.png')} style={[{
+            <img src={require('../../../img/soundcloud_logo.png')} style={[{
               width: 100,
               height: 100
             }]}/>
@@ -105,44 +97,8 @@ class EmailInterface extends React.Component {
             alignItems: 'center',
             flexDirection: 'column'
           }]}>
-            <span>Email server:</span>
+            <span>Soundcloud api token:</span>
             <input type="text" style={[styles.input]} value={this.state.emailServer} onChange={ (e) => {this.handleChange(e)('emailServer');} }/>
-          </div>
-          <div style={[{
-            marginTop: 10,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }]}>
-            <span>Email server port:</span>
-            <input type="text" style={[styles.input]} value={this.state.emailPort} onChange={ (e) => {this.handleChange(e)('emailPort');} }/>
-          </div>
-          <div style={[{
-            marginTop: 10,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }]}>
-            <span>Email address:</span>
-            <input type="text" style={[styles.input]} value={this.state.emailAddress} onChange={ (e) => {this.handleChange(e)('emailAddress');} }/>
-          </div>
-          <div style={[{
-            marginTop: 10,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }]}>
-            <span>Email password:</span>
-            <input type="password" style={[styles.input]} value={this.state.emailPassword} onChange={ (e) => {this.handleChange(e)('emailPassword');} }/>
-          </div>
-          <div style={[{
-            marginTop: 10,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }]}>
-            <span>Email important:</span>
-            <input type="text" style={[styles.input]} value={this.state.emailImportant} onChange={ (e) => {this.handleChange(e)('emailImportant');} }/>
           </div>
           <div style={[{
             marginTop: 10,
@@ -158,18 +114,18 @@ class EmailInterface extends React.Component {
   }
 }
 
-export default Radium(EmailInterface);
+export default Radium(AudioVisualizerInterface);
 
 var styles = {
   input:
   {
     marginTop: 10,
     display: 'block',
-    border: '3px solid #2468FF',
+    border: '3px solid #ff3a00',
     backgroundColor: '#060D1E',
-    height: 60,
-    width: 350,
-    fontSize: '24px',
+    height: 30,
+    width: 100,
+    fontSize: '16px',
     padding: 10,
     color: '#2468FF',
     fontFamily: 'cabinregular',
@@ -179,10 +135,10 @@ var styles = {
   {
     marginTop: 0,
     display: 'block',
-    border: '3px solid ' + Color('#2468FF').darken(0.25).hexString(),
+    border: '3px solid ' + Color('#ff3a00').darken(0.25).hexString(''),
     backgroundColor: '#2468FF',
-    height: 60,
-    width: 350,
+    height: 30,
+    width: 120,
     fontSize: '24px',
     padding: 10,
     color: '#FFFFFF',
