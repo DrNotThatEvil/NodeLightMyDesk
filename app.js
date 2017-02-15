@@ -6,7 +6,7 @@ const public_app = express();
 
 
 process.on('uncaughtException', function (err) {
-  console.error(err.stack);
+  consol.error(err.stack);
   console.log("Node NOT Exiting...");
 });
 

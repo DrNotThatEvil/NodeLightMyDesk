@@ -77,38 +77,40 @@ function canConnectToStreamJar()
 
 function connectToStreamJar()
 {
-    if(!canConnectToStreamJar())
-        return;
+  if(!canConnectToStreamJar())
+    return;
 
-    var sock = io('https://ws.streamjar.tv/', { query: 'key='+config.streamJarApi });
-    sock.on('connect', function() {
-        console.log('Connected to streamjar');
-    });
+  var sock = io('https://ws.streamjar.tv/', { query: 'key='+config.streamJarApi });
+  sock.on('connect', function() {
+    console.log('Connected to streamjar');
+  });
 
-    sock.on('connect_error', function(error) {
-        console.log(error);
-    });
+  sock.on('connect_error', function(error) {
+    console.log(error);
+  });
 
-    sock.on('donation', function(donation) {
-        console.log(donation.name + ' just donated to the stream.');
+  sock.on('error', function(error) {
+    console.log(error);
+  });
 
-        var curColor = RGBControl.getColor();
-        var unix = Math.floor(Date.now() / 1000);
+  sock.on('donation', function(donation) {
+    console.log(donation.name + ' just donated to the stream.');
 
-        //console.log(unix, lastChangeTime, color);
-        if(status)
-        {
-            if((lastChangeTime + 20) < unix)
-            {
-                lastChangeTime = unix;
-                let curColor = RGBControl.getColor();
-                let durationCalc = (Math.ceil(donation.amount*20)/20).toFixed(2) * ravePerEuro;
-                durationCalc *= 1000;
-                RGBControl.newJob('rave', {duration: durationCalc});
-                RGBControl.newJob('steadycolor', {color: [curColor[0], curColor[1], curColor[2]], translate: true}, {repeat: true});
-            }
-        }
-    });
+    var curColor = RGBControl.getColor();
+    var unix = Math.floor(Date.now() / 1000);
+
+    //console.log(unix, lastChangeTime, color);
+    if(status) {
+      if((lastChangeTime + 20) < unix) {
+        lastChangeTime = unix;
+        let curColor = RGBControl.getColor();
+        let durationCalc = (Math.ceil(donation.amount*20)/20).toFixed(2) * ravePerEuro;
+        durationCalc *= 1000;
+        RGBControl.newJob('rave', {duration: durationCalc});
+        RGBControl.newJob('steadycolor', {color: [curColor[0], curColor[1], curColor[2]], translate: true}, {repeat: true});
+      }
+    }
+  });
 }
 
 function changeColor(color)
