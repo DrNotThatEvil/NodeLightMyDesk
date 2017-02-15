@@ -102,7 +102,7 @@ class Routes extends React.Component
 {
   static propTypes = {
     server: React.PropTypes.object.isRequired,
-    fetchInstalled: React.PropTypes.function.isRequired
+    fetchInstalled: React.PropTypes.func.isRequired
   };
 
   constructor(props)
