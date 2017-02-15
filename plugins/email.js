@@ -86,7 +86,9 @@ function connectToImap()
     password: config.emailPassword,
     host: config.emailServer,
     port: config.emailPort,
-    tls: true,
+    tls: {
+      secureProtocol: 'TLSv1_method'
+    },
     mailbox: 'INBOX',
     authTimeout: 15000,
     connectTimeout: 30000
@@ -145,9 +147,13 @@ function connectToImap()
     }
   });
 
-  //imapClient.on('end', () => {
-  //  console.log('end');
-  //});
+  imapClient.on('error', (err) => {
+    console.log('Imap error:', err);
+  });
+
+  imapClient.on('end', () => {
+    console.log('end');
+  });
 
   imapClient.start();
 }
