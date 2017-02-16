@@ -43,10 +43,6 @@ wss.on('connection', function(ws) {
         //console.log('AudioShow led data safe');
 
         ledData.leds.forEach((part, index) => {
-          let g = ledData.leds[index][1];
-          g = g - (( g * (g/220)) * 0.5);
-          ledData.leds[index][1] = g;
-
           ledData.leds[index].push(0);
         });
 

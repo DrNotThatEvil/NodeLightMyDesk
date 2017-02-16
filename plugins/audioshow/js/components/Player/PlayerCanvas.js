@@ -2,8 +2,8 @@ import React from 'react';
 import Radium from 'radium';
 
 function redYellowGreen(min, max, value) {
-  var green_max = 220;
-  var red_max = 220;
+  var green_max = 255;
+  var red_max = 255;
   var red = 0;
   var green = 0;
 
