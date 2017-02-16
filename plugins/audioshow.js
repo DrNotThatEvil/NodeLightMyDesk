@@ -69,6 +69,20 @@ function addRoutes(router)
     setData(req.body.config);
     res.json({ data: [{ set: true, value: config }], errors: []});
   });
+
+  router.get('/testLoopy', (req, res) => {
+    let leds = [];
+    for(let i=0; i<RGBControl.getNumLeds(); i++) {
+      let ledArray = [];
+      for(let j=0; j<3; j++) {
+        ledArray.push((Math.floor(Math.random() * 256)));
+      }
+      leds.push(ledArray);
+    }
+
+    RGBControl.newJob('arraysteadycolor', {leds: leds, translate: true}, {repeat: true});
+    res.json({ data: [{ set: true, value: true }], errors: []});
+  });
 }
 
 function setStatus(val)

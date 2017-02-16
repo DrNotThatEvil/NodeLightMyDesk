@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const public_app = express();
-
+const path = require('path');
+const fs = require('fs');
 
 process.on('uncaughtException', function (err) {
   console.error(err.stack);
@@ -10,9 +11,13 @@ process.on('uncaughtException', function (err) {
 });
 
 const router = express.Router();
-const path = require('path');
 
 global.appRoot = path.resolve(__dirname);
+
+var configDir = path.join(global.appRoot, 'config');
+if (!fs.existsSync(configDir)) {
+  fs.mkdirSync(configDir);
+}
 
 let RGBControl = require('./lib/RGBControl');
 const rgbControl = new RGBControl(app, public_app);

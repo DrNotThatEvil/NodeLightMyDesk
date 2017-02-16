@@ -8,6 +8,7 @@
   },
   "scripts": {
     "run": "node app.js",
+    "runLocal": "LOCAL_DEV=1 node app.js",
     "build": "./node_modules/.bin/webpack",
     "watch": "./node_modules/.bin/webpack-dev-server ---hot --inline --host 0.0.0.0",
     "test": "./node_modules/.bin/eslint app/**/*.js lib/**/*.js plugins/**/*.js src/js/**/*.js"
