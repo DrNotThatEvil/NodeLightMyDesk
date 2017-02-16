@@ -26,6 +26,7 @@ require('./lib/RGBFadeIn')(rgbControl);
 require('./lib/RGBFadeOut')(rgbControl);
 require('./lib/RGBSteadyColor')(rgbControl);
 require('./lib/RGBRave')(rgbControl);
+require('./lib/RGBArraySteadyColor')(rgbControl);
 
 global.rgbcontrol = rgbControl;
 
