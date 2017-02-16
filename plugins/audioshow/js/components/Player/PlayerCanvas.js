@@ -104,12 +104,22 @@ class PlayerCanvas extends React.Component {
   }
 
   componentDidMount() {
+    this.reconnectWebsocket();
     this.canvasContext = this.canvas.getContext('2d');
     this.canvasWidth = this.canvas.width;
     this.canvasHeight = this.canvas.height;
     this.idleAnimation();
     this.initAudio();
     this.findTrack();
+  }
+
+  reconnectWebsocket() {
+    var wsLocation = 'ws://' + window.location.hostname + ':8801';
+    this.ws = new WebSocket(wsLocation);
+    this.ws.onclose = function(){
+      //try to reconnect in 5 seconds
+      setTimeout(function() { this.reconnectWebsocket() }.bind(this), 5000);
+    }.bind(this);
   }
 
   startDrawing() {
@@ -131,7 +141,7 @@ class PlayerCanvas extends React.Component {
     var dataArray = new Uint8Array(bufferLength);
     this.analyser['getByteFrequencyData'](dataArray);
     
-    var amountOfLeds = 55;
+    var amountOfLeds = 50;
     var spacing = (this.canvasWidth - 15) / amountOfLeds;
     //TODO: REPLACE amountOfLeds WITH THE AMOUNT OF LEDS FROM THE LED CONTROLLER
     //
@@ -146,7 +156,7 @@ class PlayerCanvas extends React.Component {
       this.canvasContext.beginPath();
       this.canvasContext.moveTo((i+1) * spacing, 255);
       var rgbObject = redYellowGreen(0, 255, avg);
-      webSocketData.push(rgbObject);
+      webSocketData.push([rgbObject.red, rgbObject.green, rgbObject.blue]);
       this.canvasContext.strokeStyle = 'rgba(' + rgbObject.red + ', ' + rgbObject.green + ', ' + rgbObject.blue + ', 1)';
       
       this.canvasContext.lineTo((i+1) * spacing, 255 - avg);
@@ -154,7 +164,10 @@ class PlayerCanvas extends React.Component {
       this.canvasContext.stroke();
     }
 
-    console.log(JSON.stringify({leds: webSocketData.reverse()}));
+    if(this.ws.readyState == 1){
+      var websocketSendData = JSON.stringify({leds: webSocketData.reverse()});
+      this.ws.send(websocketSendData);
+    }
   }
 
   handlePlay() {
