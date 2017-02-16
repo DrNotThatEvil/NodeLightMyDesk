@@ -87,7 +87,7 @@ class PlayerCanvas extends React.Component {
 
   findTrack() {
     //var trackPermalinkUrl = 'https://soundcloud.com/the-outsider/the-outsider-death-by-melody';
-    var trackPermlinkUrl = 'https://soundcloud.com/themahiofficial/another-day-original-mix-1';
+    var trackPermalinkUrl = 'https://soundcloud.com/themahiofficial/another-day-original-mix-1';
     var clientid = 'client_id=2341a3bad20c6cf96367911d6458a1cc';
 
     //var streamUrl = '';
