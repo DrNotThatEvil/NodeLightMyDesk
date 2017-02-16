@@ -4,13 +4,15 @@ import Radium from 'radium';
 function redYellowGreen(min, max, value) {
   var red = 0;
   var green = 0;
+  var green_max = 100;
+  var red_max = 220;
 
   if (value < max/2) { 
     red = 220;
-    green = Math.round((value/(max/2))*175);
+    green = Math.round((value/(max/2))*green_max);
   } else {  
     green = 175;
-    red = Math.round((1-((value-(max/2))/(max/2)))*220);
+    red = Math.round((1-((value-(max/2))/(max/2)))*red_max);
   }
   //
 
