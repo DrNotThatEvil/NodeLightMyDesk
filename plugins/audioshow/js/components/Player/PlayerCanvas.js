@@ -154,7 +154,7 @@ class PlayerCanvas extends React.Component {
       this.canvasContext.stroke();
     }
 
-    //console.log(webSocketData.reverse());
+    console.log(JSON.stringify({leds: webSocketData.reverse()}));
   }
 
   handlePlay() {

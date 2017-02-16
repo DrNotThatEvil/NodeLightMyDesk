@@ -6,7 +6,51 @@ const path = require('path');
 
 const RGBControl = global.rgbcontrol;
 
+const WebSocketServer = require('ws').Server
+ , wss = new WebSocketServer({ port: 8801 });
+
 let status = false;
+
+function isSaveLedData(json) {
+  if(!('leds' in json))
+  {
+    return false;
+  }
+
+  if(json.leds.length != RGBControl.getNumLeds()) 
+  {
+    return false;
+  }
+
+  return true;
+}
+
+
+wss.on('connection', function(ws) {
+  ws.on('error', function (e) {
+    console.log('Client #%d error: %s', thisId, e.message);
+  });
+
+  ws.on('message', function(data, flags) {
+    if(!status) {
+      return;
+    }
+
+    try {
+      console.log(typeof data);
+      let ledData = JSON.parse(data); 
+
+      if(isSaveLedData(ledData)) {
+        console.log('AudioShow led data safe');
+        RGBControl.newJob('arraysteadycolor', {leds: ledData.leds, translate: true}, {repeat: false});
+      } else {
+        console.log('AudioShow led data unsafe.');
+      }
+    } catch (e) {
+      console.log('Could not decode audioshow json data');
+    }
+  });
+});
 
 let config = {
   soundcloudApi: ''
