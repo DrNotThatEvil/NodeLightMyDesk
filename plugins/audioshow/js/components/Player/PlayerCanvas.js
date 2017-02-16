@@ -2,22 +2,24 @@ import React from 'react';
 import Radium from 'radium';
 
 function redYellowGreen(min, max, value) {
-  var green_max = 255;
-  var red_max = 255;
   var red = 0;
   var green = 0;
 
-  if (value < max/2) { 
-    red = red_max; 
-    green = Math.round((value/(max/2))*green_max);
-  } else {  
-    green = green_max;
-    red = Math.round((1-((value-(max/2))/(max/2)))*red_max);
-  }
+  //if (value < max/2) { 
+  //  red = red_max; 
+  //  green = Math.round((value/(max/2))*green_max);
+  //} else {  
+  //  green = green_max;
+  //  red = Math.round((1-((value-(max/2))/(max/2)))*red_max);
+  //}
+  //
+
+  red   = (value > (max/2) ? 1-2*(value-50)/max : 1.0);
+  green = (value > (max/2) ? 1.0 : 2*value/max);
 
   return {
-    red: green, // These values are flipped to make red appear at the top.
-    green: red, // Dont get confuseled by this
+    red: Math.floor((green * 220)), // These values are flipped to make red appear at the top.
+    green: Math.floor((red * 220)), // Dont get confuseled by this
     blue: 0
   };
 }
