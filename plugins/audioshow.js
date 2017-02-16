@@ -42,8 +42,8 @@ wss.on('connection', function(ws) {
       if(isSaveLedData(ledData)) {
         //console.log('AudioShow led data safe');
 
-        ledData.foreach((part, index, arr) => {
-          arr[index].push(0);
+        ledData.leds.foreach((part, index) => {
+          ledData.leds[index].push(0);
         });
 
         RGBControl.newJob('arraysteadycolor', {leds: ledData.leds, translate: true}, {repeat: false});
