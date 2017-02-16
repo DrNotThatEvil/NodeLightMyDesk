@@ -130,10 +130,10 @@ class PlayerCanvas extends React.Component {
     this.analyser.ttfSize = 512;
     this.canvasContext.lineWidth = 1;
     this.canvasContext.strokeStyle = 'rgba(0,0,0, 1)';
-    this.drawAgain();
+    this.drawAgain(true);
   }
 
-  drawAgain() {
+  drawAgain(pregen) {
     this.canvasContext.clearRect(0,0, this.canvasWidth, this.canvasHeight);
     requestAnimationFrame(this.drawAgain);
 
@@ -156,7 +156,7 @@ class PlayerCanvas extends React.Component {
       this.canvasContext.beginPath();
       this.canvasContext.moveTo((i+1) * spacing, 255);
       var rgbObject = redYellowGreen(0, 255, avg);
-      webSocketData.push([rgbObject.red, rgbObject.green, rgbObject.blue]);
+      webSocketData.push([rgbObject.red, rgbObject.green]);
       this.canvasContext.strokeStyle = 'rgba(' + rgbObject.red + ', ' + rgbObject.green + ', ' + rgbObject.blue + ', 1)';
       
       this.canvasContext.lineTo((i+1) * spacing, 255 - avg);

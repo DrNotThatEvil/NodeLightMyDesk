@@ -37,14 +37,18 @@ wss.on('connection', function(ws) {
     }
 
     try {
-      console.log(typeof data);
       let ledData = JSON.parse(data); 
 
       if(isSaveLedData(ledData)) {
-        console.log('AudioShow led data safe');
+        //console.log('AudioShow led data safe');
+
+        ledData.foreach((part, index, arr) => {
+          arr[index].push(0);
+        });
+
         RGBControl.newJob('arraysteadycolor', {leds: ledData.leds, translate: true}, {repeat: false});
       } else {
-        console.log('AudioShow led data unsafe.');
+        //console.log('AudioShow led data unsafe.');
       }
     } catch (e) {
       console.log('Could not decode audioshow json data');
