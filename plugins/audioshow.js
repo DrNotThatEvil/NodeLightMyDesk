@@ -75,7 +75,7 @@ function addRoutes(router)
     for(let i=0; i<RGBControl.getNumLeds(); i++) {
       let ledArray = [];
       for(let j=0; j<3; j++) {
-        ledArray.push((Math.floor(Math.random() * 256)));
+        ledArray.push((Math.floor(Math.random() * 255)));
       }
       leds.push(ledArray);
     }
