@@ -80,7 +80,7 @@ function addRoutes(router)
       leds.push(ledArray);
     }
 
-    RGBControl.newJob('arraysteadycolor', {leds: leds, translate: true}, {repeat: true});
+    RGBControl.newJob('arraysteadycolor', {leds: leds, translate: true}, {repeat: false});
     res.json({ data: [{ set: true, value: true }], errors: []});
   });
 }
