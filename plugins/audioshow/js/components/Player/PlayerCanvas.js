@@ -129,7 +129,7 @@ class PlayerCanvas extends React.Component {
       isPlaying: true
     });
 
-    this.analyser.ttfSize = 1024;
+    this.analyser.ttfSize = 64;
     this.canvasContext.lineWidth = 1;
     this.canvasContext.strokeStyle = 'rgba(0,0,0, 1)';
     this.drawAgain(true);
