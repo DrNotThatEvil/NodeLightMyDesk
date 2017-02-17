@@ -44,7 +44,6 @@ wss.on('connection', function(ws) {
 
         ledData.leds.forEach((part, index) => {
           ledData.leds[index].push(0);
-          ledData.leds[index].push(0.5);
         });
 
         RGBControl.newJob('arraysteadycolor', {leds: ledData.leds, translate: true}, {repeat: false});
