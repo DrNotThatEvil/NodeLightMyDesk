@@ -17,8 +17,8 @@ function redYellowGreen(min, max, value) {
   //
 
   return {
-    red: green, // These values are flipped to make red appear at the top.
-    green:red, // Dont get confuseled by this
+    red: red,
+    green:green, 
     blue: 0
   };
 }
