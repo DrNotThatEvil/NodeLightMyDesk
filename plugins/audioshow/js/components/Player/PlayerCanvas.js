@@ -4,7 +4,7 @@ import Radium from 'radium';
 function redYellowGreen(min, max, value) {
   var red = 0;
   var green = 0;
-  var green_max = 120;
+  var green_max = 220;
   var red_max = 120;
 
   if (value > max/2) { 
