@@ -7,7 +7,7 @@ function redYellowGreen(min, max, value) {
   var green_max = 100;
   var red_max = 220;
 
-  if (value < max/2) { 
+  if (value > max/2) { 
     red = 220;
     green = Math.round((value/(max/2))*green_max);
   } else {  
