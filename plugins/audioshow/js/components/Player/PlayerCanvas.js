@@ -158,7 +158,7 @@ class PlayerCanvas extends React.Component {
       this.canvasContext.beginPath();
       this.canvasContext.moveTo((i+1) * spacing, 255);
       var rgbObject = redYellowGreen(0, 255, avg);
-      webSocketData.push([rgbObject.red, rgbObject.green]);
+      webSocketData.push([rgbObject.green, rgbObject.red]);
       this.canvasContext.strokeStyle = 'rgba(' + rgbObject.red + ', ' + rgbObject.green + ', ' + rgbObject.blue + ', 1)';
       
       this.canvasContext.lineTo((i+1) * spacing, 255 - avg);
