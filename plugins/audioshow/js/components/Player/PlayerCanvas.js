@@ -17,8 +17,8 @@ function redYellowGreen(min, max, value) {
   //
 
   return {
-    red: red,
-    green:green, 
+    red: green,
+    green:red, 
     blue: 0
   };
 }
