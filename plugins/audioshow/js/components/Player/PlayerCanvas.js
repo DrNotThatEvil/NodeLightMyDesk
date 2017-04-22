@@ -1,24 +1,111 @@
 import React from 'react';
 import Radium from 'radium';
 
+/**
+* HSV to RGB color conversion
+*
+* H runs from 0 to 360 degrees
+* S and V run from 0 to 100
+*
+* Ported from the excellent java algorithm by Eugene Vishnevsky at:
+* http://www.cs.rit.edu/~ncs/color/t_convert.html
+*/
+function hsvToRgb(h, s, v) {
+    var r, g, b;
+    var i;
+    var f, p, q, t;
+     
+    // Make sure our arguments stay in-range
+    h = Math.max(0, Math.min(360, h));
+    s = Math.max(0, Math.min(100, s));
+    v = Math.max(0, Math.min(100, v));
+     
+    // We accept saturation and value arguments from 0 to 100 because that's
+    // how Photoshop represents those values. Internally, however, the
+    // saturation and value are calculated from a range of 0 to 1. We make
+    // That conversion here.
+    s /= 100;
+    v /= 100;
+     
+    if(s == 0) {
+        // Achromatic (grey)
+        r = g = b = v;
+        return [
+            Math.round(r * 255), 
+            Math.round(g * 255), 
+            Math.round(b * 255)
+        ];
+    }
+     
+    h /= 60; // sector 0 to 5
+    i = Math.floor(h);
+    f = h - i; // factorial part of h
+    p = v * (1 - s);
+    q = v * (1 - s * f);
+    t = v * (1 - s * (1 - f));
+     
+    switch(i) {
+        case 0:
+            r = v;
+            g = t;
+            b = p;
+            break;
+     
+        case 1:
+            r = q;
+            g = v;
+            b = p;
+            break;
+     
+        case 2:
+            r = p;
+            g = v;
+            b = t;
+            break;
+     
+        case 3:
+            r = p;
+            g = q;
+            b = v;
+            break;
+     
+        case 4:
+            r = t;
+            g = p;
+            b = v;
+            break;
+     
+        default: // case 5:
+            r = v;
+            g = p;
+            b = q;
+    }
+     
+    return [
+        Math.round(r * 255), 
+        Math.round(g * 255), 
+        Math.round(b * 255)
+    ];
+}
+
+
 function redYellowGreen(min, max, value) {
-  var red = 0;
-  var green = 0;
-  var green_max = 220;
-  var red_max = 220;
-
-  if (value > max/2) { 
-    red = red_max;
-    green = Math.round((value/(max/2))*green_max);
-  } else {  
-    green = green_max;
-    red = Math.round((1-((value-(max/2))/(max/2)))*red_max);
+  var p = ((value - min) / (max - min));
+  
+  if (p < 0 || p > 1) {
+    return {
+      red: 0,
+      green: 0,
+      blue: 0
+    };
   }
-  //
 
+  var hsv = hsvToRgb((120 * p), 100, 100);
+
+  // these values are flipped cause we want red on the top and green at te bottom.
   return {
-    red: green,
-    green:red, 
+    red: hsv[1],
+    green: hsv[0], 
     blue: 0
   };
 }
@@ -88,7 +175,8 @@ class PlayerCanvas extends React.Component {
 
   findTrack() {
     //var trackPermalinkUrl = 'https://soundcloud.com/the-outsider/the-outsider-death-by-melody';
-    var trackPermalinkUrl = 'https://soundcloud.com/murtaghmusic/murtagh-synapse';
+    //var trackPermalinkUrl = 'https://soundcloud.com/murtaghmusic/murtagh-synapse';
+    var trackPermalinkUrl = 'https://soundcloud.com/ornomusic/amethyst';
     var clientid = 'client_id=2341a3bad20c6cf96367911d6458a1cc';
 
     //var streamUrl = '';
@@ -158,7 +246,7 @@ class PlayerCanvas extends React.Component {
       this.canvasContext.beginPath();
       this.canvasContext.moveTo((i+1) * spacing, 255);
       var rgbObject = redYellowGreen(0, 255, avg);
-      webSocketData.push([rgbObject.green, rgbObject.red]);
+      webSocketData.push([rgbObject.red, rgbObject.green]);
       this.canvasContext.strokeStyle = 'rgba(' + rgbObject.red + ', ' + rgbObject.green + ', ' + rgbObject.blue + ', 1)';
       
       this.canvasContext.lineTo((i+1) * spacing, 255 - avg);
