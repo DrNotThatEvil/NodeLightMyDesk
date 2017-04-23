@@ -34,7 +34,7 @@ module.exports = (app) => {
     let curColor = RGBControl.getColor();
     RGBControl.newJob('fadeout', {color: [curColor[0], curColor[1], curColor[2]], delay: 5, translate: true});
     RGBControl.newJob('fadein', {color: req.body.color, delay: 5, translate: true});
-    RGBControl.newJob('steadycolor', {color: req.body.color, translate: true}, {repeat: true});
+    RGBControl.newJob('steadycolor', {color: req.body.color, translate: true}, {repeat: true, restart: true});
 
     res.json({ data: [{ set: true, value: req.body.color}], errors: []});
   });
