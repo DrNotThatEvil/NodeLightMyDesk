@@ -7,10 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "run": "node --expose-gc app.js",
+    "run": "node app.js",
+    "runLocal": "LOCAL_DEV=1 node app.js",
     "build": "./node_modules/.bin/webpack",
     "watch": "./node_modules/.bin/webpack-dev-server ---hot --inline --host 0.0.0.0",
-    "test": "./node_modules/.bin/eslint app/**/*.js lib/**/*.js plugins/**/*.js src/js/**/*.js"
+    "test": "./node_modules/.bin/eslint app/**/*.js lib/**/*.js plugins/**/*.js src/js/**/*.js",
+    "git-hook": "npm run test"
   },
   "author": "",
   "license": "ISC",
@@ -27,7 +29,7 @@
     "eslint-plugin-mocha": "*",
     "eslint-plugin-react": "*",
     "file-loader": "*",
-    "ghooks": "*",
+    "husky": "^0.13.3",
     "mocha": "*",
     "react": "*",
     "react-dom": "*",
